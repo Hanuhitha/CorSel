@@ -3,6 +3,7 @@ import LandingPage from './LandingPage';
 import Signup from './signup';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Container } from 'react-bootstrap';
+import Login from './Login';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path = '/' Component={Signup}> </Route>
         <Route path = '/Home' Component={Home}> </Route>
         <Route path = '/LandingPage' Component={LandingPage}> </Route>
+        <Route path = '/login' Component={Login}> </Route>
       </Routes>
       </div>
    
