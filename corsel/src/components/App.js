@@ -4,10 +4,11 @@ import Signup from './signup';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 import Login from './Login';
+import { AuthProvider } from '../contexts/AuthContext';
 
 function App() {
   return (
-    <>
+    <AuthProvider>
     <Container className='d-flex align-items-center justify-content-center'
     style={{minHeight:'100vh'}}>
     <BrowserRouter>
@@ -22,8 +23,7 @@ function App() {
    
     </BrowserRouter>
     </Container>
-   
-    </>
+    </AuthProvider>
    
   );
 }
