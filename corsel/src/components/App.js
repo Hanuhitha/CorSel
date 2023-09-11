@@ -5,6 +5,9 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 import Login from './Login';
 import { AuthProvider } from '../contexts/AuthContext';
+import ClassSearch from './ClassSearch';
+import Credits from './Credits';
+import CounselingForms from './CounselingForms';
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path = '/Home' Component={Home}> </Route>
         <Route path = '/LandingPage' Component={LandingPage}> </Route>
         <Route path = '/login' Component={Login}> </Route>
+        <Route path = '/ClassSearch' Component={ClassSearch}> </Route>
+        <Route path = '/CounselingForms' Component={CounselingForms}> </Route>
+        <Route path = '/Credits' Component={Credits}> </Route>
       </Routes>
       </div>
    
