@@ -1,7 +1,8 @@
 import React from 'react'
+import NavBar from './NavBar'
 
 export default function CounselingForms() {
   return (
-    <div>CounselingForms</div>
+    <><NavBar></NavBar><div>CounselingForms</div></>
   )
 }

@@ -1,7 +1,8 @@
 import React from 'react'
+import NavBar from './NavBar'
 
 export default function Credits() {
   return (
-    <div>Credits</div>
+    <><NavBar></NavBar><div>Credits</div></>
   )
 }
