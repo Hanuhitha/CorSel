@@ -57,6 +57,7 @@ nav a{
  
  .site-title {
    font-size: 2rem;
+   font-family:'Times New Roman', Times, serif;
    margin-top: 12px;
    padding-left:15rem
  }
