@@ -1,44 +1,51 @@
 import React from 'react'
 import NavBar from './NavBar'
-import { Button } from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Card} from './Card'
+
 export default function ClassSearch() {
   return (
     <><NavBar></NavBar>
-      <div class="container text-center">
-  <div class="row align-items-center">
-   
-    <div className="col1">  <div class="card">
-  <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text"></p>
-   
-  </div>
-</div></div>
+    <div style={{justifyContent:'center'}}>
+    <div style={{marginBottom:'50px',marginTop:'5rem',paddingLeft:'15rem',boxShadow:''}}> 
+      <Card
+      imgSrc=''
+      imgAlt='Courses list will be provided here'
+      title='Total Credits per year'
+      description='.'
+      link='/ClassSearch'
+      width='70rem'
 
-<div className="col2">  <div class="card">
-  <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text"></p>
-   
-  </div>
-</div></div>
-    <div className="col3">  <div class="card">
-  <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text"></p>
+      />
+      </div>
 
-  </div>
-</div> </div>
-    <div className="col4">  <div class="card">
-  <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text"></p>
-   
-  </div>
-</div> </div>
-  </div>
-</div>
+    <div style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
+
+      <div style={{}}> 
+      <Card
+      title='Search/Filter'
+      description=''
+      width='15rem'
+      height='31rem'
+      />
+      </div>
+      <div>
+      <Card 
+      title='Filtered Courses'
+      description=''
+      width='45rem'
+      height='31rem'
+      />
+      </div>
+      <div style={{textAlign:'center'}}>
+      <Card 
+      title='Course Description'
+      description=''
+      width='16rem'
+      height='31rem'
+      />
+      </div>
+      </div>
+    </div>
 
     </>
   )
