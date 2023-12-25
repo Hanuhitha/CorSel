@@ -6,7 +6,7 @@ export default function ClassSearch() {
   return (
     <><NavBar></NavBar>
     <div style={{justifyContent:'center'}}>
-    <div style={{marginBottom:'50px',marginTop:'5rem',paddingLeft:'15rem',boxShadow:''}}> 
+    {/* <div style={{marginBottom:'50px',marginTop:'5rem',paddingLeft:'15rem',boxShadow:''}}> 
       <Card
       imgSrc=''
       imgAlt='Courses list will be provided here'
@@ -16,7 +16,7 @@ export default function ClassSearch() {
       width='70rem'
 
       />
-      </div>
+      </div> */}
 
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
 
