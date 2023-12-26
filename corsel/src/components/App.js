@@ -7,7 +7,7 @@ import Login from './Login';
 import { AuthProvider } from '../contexts/AuthContext';
 import ClassSearch from './ClassSearch';
 import Credits from './Credits';
-import CounselingForms from './CounselingForms';
+import Forms from './Forms';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Route path = '/LandingPage' Component={LandingPage}> </Route>
         <Route path = '/login' Component={Login}> </Route>
         <Route path = '/ClassSearch' Component={ClassSearch}> </Route>
-        <Route path = '/CounselingForms' Component={CounselingForms}> </Route>
+        <Route path = '/Forms' Component={Forms}> </Route>
         <Route path = '/Credits' Component={Credits}> </Route>
       </Routes>
       </div>

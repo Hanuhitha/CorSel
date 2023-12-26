@@ -12,37 +12,44 @@ export default function LandingPage() {
       <NavBar></NavBar>
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
       <div style={{marginRight:'5%'}}> 
+      <Link to ='/ClassSearch'>
       <Card
       imgSrc='edviselogo.jpeg'
       imgAlt='Courses list will be provided here'
       title='Courses'
       description=''
-      buttonText='Click Here'
+      buttonText=''
       link='/ClassSearch'
       width='15rem'
       />
+      </Link>
+  
       </div>
       <div>
+      <Link to ='/Credits'>
       <Card 
       imgSrc='edviselogo.jpeg'
       imgAlt='Courses list will be provided here'
       title='Schedule'
       description=''
-      buttonText='Click Here'
+      buttonText=''
       link='/Credits'
       width='15rem'
       />
+      </Link>
       </div>
       <div style={{marginLeft:'5%'}}>
+      <Link to ='/Forms'>
       <Card 
       imgSrc='edviselogo.jpeg'
       imgAlt='Courses list will be provided here'
-      title='CouncellingForms'
+      title='Forms'
       description=''
-      buttonText='Click Here'
-      link='/CouncellingForms'
+      buttonText=''
+      link='/Forms'
       width='15rem'
       />
+      </Link>
       </div>
     </div>
 </div>

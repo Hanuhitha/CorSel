@@ -32,7 +32,8 @@ body {
   display:block;
   text-align: left;
   margin-top: 12px;
-  margin-left: 30px;
+  padding-right: 55%;
+  /* margin-left: 30px; */
   /* margin-right: 300px; */
   /* padding-right:600px; */
 }

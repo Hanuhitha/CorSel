@@ -2,7 +2,7 @@ import React from 'react'
 import NavBar from './NavBar'
 import {Card} from './Card'
 
-export default function CounselingForms() {
+export default function Forms() {
   return (
     <><NavBar></NavBar>
     <div style={{justifyContent:'center'}}>
