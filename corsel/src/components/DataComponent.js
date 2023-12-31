@@ -1,18 +1,27 @@
-// DataComponent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import NavBar from './NavBar';
+import { Card } from './Card';
 
-const DataComponent = () => {
+const fetchDataFromBackend = async () => {
+  const apiUrl = 'http://localhost:4000/data';
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
+  }
+};
+
+const DisplayData = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/data');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      const fetchedData = await fetchDataFromBackend();
+      setData(fetchedData);
     };
 
     fetchData();
@@ -20,13 +29,14 @@ const DataComponent = () => {
 
   return (
     <div>
-      <h1>Data Component</h1>
+      <h2>Data Display</h2>
       <ul>
-        {data.map((item, index) => (
-          <li key={index}>
-            <strong>ID:</strong> {item.id} <br />
-            <strong>Name:</strong> {item.name} <br />
-            <strong>Other Property:</strong> {item.otherProperty} {/* Add more properties as needed */}
+        {Object.keys(data).map((key) => (
+          <li key={key}>
+            {/* Assuming you want to display the course name and teacher display */}
+            <p>{data[key].courseInfo_courseName}</p>
+            <p>{data[key].sectionInfo_teacherDisplay}</p>
+            {/* Add more fields as needed */}
           </li>
         ))}
       </ul>
@@ -34,7 +44,41 @@ const DataComponent = () => {
   );
 };
 
-export default DataComponent;
+export default function ClassSearch() {
+  return (
+    <>
+      <NavBar />
+      <div style={{ justifyContent: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+          <div style={{}}>
+            <Card
+              title='Search/Filter'
+              description=''
+              width='15rem'
+              height='31rem'
+            />
+          </div>
+          <div>
+            <Card
+              title='Filtered Courses'
+              description=''
+              width='45rem'
+              height='31rem'
+            />
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Card
+              title='Course Description'
+              description=''
+              width='16rem'
+              height='31rem'
+            />
+          </div>
+        </div>
 
-
-
+        {/* Include the DisplayData component here */}
+        <DisplayData />
+      </div>
+    </>
+  );
+}
