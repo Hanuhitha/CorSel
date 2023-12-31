@@ -1,6 +1,12 @@
-import React from 'react'
-import NavBar from './NavBar'
-import {Card} from './Card'
+import NavBar from './NavBar';
+import {Card} from './Card';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+
+
+  
+
 
 export default function ClassSearch() {
   return (
@@ -35,6 +41,7 @@ export default function ClassSearch() {
       width='45rem'
       height='31rem'
       />
+    
       </div>
       <div style={{textAlign:'center'}}>
       <Card 

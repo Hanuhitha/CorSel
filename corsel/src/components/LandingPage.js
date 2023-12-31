@@ -13,14 +13,16 @@ export default function LandingPage() {
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
       <div style={{marginRight:'5%'}}> 
       <Link to ='/ClassSearch'>
-      <Card
-      imgSrc='edviselogo.jpeg'
+      <Card 
+      
+      imgSrc='icons8-e-learning-90.png'
       imgAlt='Courses list will be provided here'
       title='Courses'
       description=''
       buttonText=''
       link='/ClassSearch'
       width='15rem'
+      className='custom-card'
       />
       </Link>
   
@@ -28,7 +30,7 @@ export default function LandingPage() {
       <div>
       <Link to ='/Credits'>
       <Card 
-      imgSrc='edviselogo.jpeg'
+      imgSrc='icons8-schedule-96.png'
       imgAlt='Courses list will be provided here'
       title='Schedule'
       description=''
@@ -41,7 +43,7 @@ export default function LandingPage() {
       <div style={{marginLeft:'5%'}}>
       <Link to ='/Forms'>
       <Card 
-      imgSrc='edviselogo.jpeg'
+      imgSrc='icons8-documents-64.png'
       imgAlt='Courses list will be provided here'
       title='Forms'
       description=''
