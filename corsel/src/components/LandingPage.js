@@ -13,14 +13,8 @@ export default function LandingPage() {
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
       <div style={{marginRight:'5%'}}> 
       <Link to ='/ClassSearch'>
-<<<<<<< Updated upstream
-      <Card 
-      
-      imgSrc='icons8-e-learning-90.png'
-=======
       <Card
       imgSrc=''
->>>>>>> Stashed changes
       imgAlt='Courses list will be provided here'
       title='Courses'
       description=''
@@ -35,11 +29,7 @@ export default function LandingPage() {
       <div>
       <Link to ='/Credits'>
       <Card 
-<<<<<<< Updated upstream
-      imgSrc='icons8-schedule-96.png'
-=======
       imgSrc=''
->>>>>>> Stashed changes
       imgAlt='Courses list will be provided here'
       title='Schedule'
       description=''
@@ -52,11 +42,7 @@ export default function LandingPage() {
       <div style={{marginLeft:'5%'}}>
       <Link to ='/Forms'>
       <Card 
-<<<<<<< Updated upstream
-      imgSrc='icons8-documents-64.png'
-=======
       imgSrc=''
->>>>>>> Stashed changes
       imgAlt='Courses list will be provided here'
       title='Forms'
       description=''

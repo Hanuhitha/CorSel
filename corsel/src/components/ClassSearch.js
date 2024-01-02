@@ -32,8 +32,8 @@ const DisplayData = () => {
       <ul>
         {Object.keys(data).map((key) => (
           <li key={key}>
-            {/* Assuming you want to display the course name and teacher display */}
-            <p>{data[key].courseInfo_courseName}</p>
+                        {/* Assuming you want to display the course name and teacher display */}
+                        <p>{data[key].courseInfo_courseName}</p>
             <p>{data[key].sectionInfo_teacherDisplay}</p>
             {/* Add more fields as needed */}
           </li>
@@ -61,7 +61,7 @@ export default function ClassSearch() {
           <div>
             <Card
               title='Filtered Courses'
-              description=''
+              description={DisplayData()}
               width='45rem'
               height='31rem'
               
@@ -78,31 +78,8 @@ export default function ClassSearch() {
         </div>
 
         {/* Include the DisplayData component here */}
-        <DisplayData />
+        {/* <DisplayData /> */}
       </div>
-<<<<<<< Updated upstream
-=======
-      <div>
-      <Card 
-      title='Filtered Courses'
-      description='courses list'
-      width='45rem'
-      height='31rem'
-      />
-      </div>
-      <div style={{textAlign:'center'}}>
-      <Card 
-      title='Course Description'
-      description=''
-      width='16rem'
-      height='31rem'
-      />
-      </div>
-      </div>
-    </div>
-
->>>>>>> Stashed changes
     </>
   );
 }
-
