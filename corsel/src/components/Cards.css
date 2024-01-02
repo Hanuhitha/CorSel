@@ -75,3 +75,25 @@
   text-decoration: none;
   margin: 0.5rem 0.75rem;
 }
+
+.underline-input {
+  border: none;
+  border-bottom: 1px solid #000; /* You can adjust the color and style as needed */
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  display: inline-block;
+  background: none;
+}
+
+.smaller-underline-input {
+  border: none;
+  border-bottom: 1px solid #000; 
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 1.5em; /* Adjust the width of the underline */
+  display: inline-block;
+  background: none;
+}
