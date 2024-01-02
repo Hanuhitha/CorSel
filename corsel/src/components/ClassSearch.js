@@ -80,6 +80,28 @@ export default function ClassSearch() {
         {/* Include the DisplayData component here */}
         <DisplayData />
       </div>
+<<<<<<< Updated upstream
+=======
+      <div>
+      <Card 
+      title='Filtered Courses'
+      description='courses list'
+      width='45rem'
+      height='31rem'
+      />
+      </div>
+      <div style={{textAlign:'center'}}>
+      <Card 
+      title='Course Description'
+      description=''
+      width='16rem'
+      height='31rem'
+      />
+      </div>
+      </div>
+    </div>
+
+>>>>>>> Stashed changes
     </>
   );
 }

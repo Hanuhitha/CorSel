@@ -17,7 +17,14 @@ export const Card = ({
         <img className="card-image" src={imgSrc} alt={imgAlt}  />
       )}
       {title && <h3 className="card-title">{title}</h3>}
-      {description && <p className="card-description">{description}</p>}
+
+      {description && 
+      <p className="card-description">{description}</p>
+      //  list of courses
+      
+      }
+
+
       {buttonText && link && (
         <a href={link} className="card-btn">
           {buttonText}

@@ -57,11 +57,22 @@ body {
   /* padding: .25rem; */
 }
 
-.nav li.active {
-  /* background-color: #555; */
-  color:orangered;
+.nav li.hover {
+  background-color: #555;
+  /* color:orangered; */
   
 }
+
+.nav li:hover {
+  background-color: #47464b;
+  /* color:orangered; */
+  
+}
+
+
+/* a:hover {
+  background-color: yellow;
+} */
 
 
 
