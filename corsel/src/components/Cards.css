@@ -45,7 +45,8 @@
   flex-direction: column;
   margin: 1rem;
   background-color: whitesmoke;
-  height: fit-content;
+  height:fit-content;
+  overflow:auto;
 }
 
 .card-image {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import { Card } from './Card';
+
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
 
@@ -59,13 +60,17 @@ export default function ClassSearch() {
             />
           </div>
           <div>
+          
             <Card
+              
               title='Filtered Courses'
               description={DisplayData()}
               width='45rem'
               height='31rem'
-              
+            
             />
+          
+           
           </div>
           <div style={{ textAlign: 'center' }}>
             <Card
