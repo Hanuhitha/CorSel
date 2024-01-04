@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import { Card } from './Card';
+import Dropdown from './Dropdown';
 
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
@@ -54,7 +55,7 @@ export default function ClassSearch() {
           <div style={{}}>
             <Card
               title='Search/Filter'
-              description=''
+              description={Dropdown()}
               width='15rem'
               height='31rem'
             />
