@@ -5,7 +5,7 @@ function Dropdown(){
     const [selects2,setSelects2]= useState();
     return(
         <><div>
-            <h1>{selects1}</h1>
+            {/* <h1>{selects1}</h1> */}
             <h6>Filter by Difficulty</h6>
             <select value={selects1} onChange={e => setSelects1(e.target.value)}>
                 <option>Select Value</option>
@@ -14,7 +14,7 @@ function Dropdown(){
                 <option>Honors </option>
             </select>
         </div>
-        <h1>{selects2}</h1>
+        {/* <h1>{selects2}</h1> */}
         <h6>Filter by category</h6>
             <select value={selects2} onChange={e => setSelects2(e.target.value)}>
                 <option>Select Value</option>
