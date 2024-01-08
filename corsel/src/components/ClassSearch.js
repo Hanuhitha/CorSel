@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import { Card } from './Card';
-import Dropdown from './Dropdown';
 
-const fetchDataFromBackend = async () => {
+import DisplayData from './DisplayData';
+
+/*const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
 
   try {
@@ -34,16 +35,15 @@ const DisplayData = () => {
       <ul>
         {Object.keys(data).map((key) => (
           <li key={key}>
-                        {/* Assuming you want to display the course name and teacher display */}
-                        <p>{data[key].courseInfo_courseName}</p>
+                       
             <p>{data[key].sectionInfo_teacherDisplay}</p>
-            {/* Add more fields as needed */}
+    
           </li>
         ))}
       </ul>
     </div>
   );
-};
+};*/
 
 
 export default function ClassSearch() {
@@ -55,7 +55,7 @@ export default function ClassSearch() {
           <div style={{}}>
             <Card
               title='Search/Filter'
-              description={Dropdown()}
+              description=""
               width='15rem'
               height='31rem'
             />
@@ -65,7 +65,7 @@ export default function ClassSearch() {
             <Card
               
               title='Filtered Courses'
-              description={DisplayData()}
+              description={DisplayData}
               width='45rem'
               height='31rem'
             
@@ -83,8 +83,7 @@ export default function ClassSearch() {
           </div>
         </div>
 
-        {/* Include the DisplayData component here */}
-        {/* <DisplayData /> */}
+        <DisplayData />
       </div>
     </>
   );
