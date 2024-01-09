@@ -35,9 +35,9 @@ const DisplayData = () => {
       <ul>
         {Object.keys(data).map((key) => (
           <li key={key}>
-                       
+
             <p>{data[key].sectionInfo_teacherDisplay}</p>
-    
+
           </li>
         ))}
       </ul>
@@ -61,17 +61,17 @@ export default function ClassSearch() {
             />
           </div>
           <div>
-          
+
             <Card
-              
+
               title='Filtered Courses'
               description={DisplayData}
               width='45rem'
               height='31rem'
-            
+
             />
-          
-           
+
+
           </div>
           <div style={{ textAlign: 'center' }}>
             <Card

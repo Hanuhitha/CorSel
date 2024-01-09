@@ -1,43 +1,42 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import React, { useRef, useState } from 'react';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { useAuth } from '../contexts/AuthContext';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-export default function Signup() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
-  const { signup } = useAuth() // add currentUser to check the signup
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+const Signup = () => {
+  const { role } = useParams(); // Get the role parameter from the URL
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  const { signup } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
+      return setError('Passwords do not match');
     }
 
     try {
-      setError("")
-      setLoading(false)
-      await signup(emailRef.current.value, passwordRef.current.value)
-      navigate("/home")
-    } 
-    catch {
-      setError("")
+      setError('');
+      setLoading(false);
+      await signup(emailRef.current.value, passwordRef.current.value);
+      navigate('/home');
+    } catch {
+      setError('');
     }
-    
-    setLoading(true)
+
+    setLoading(true);
   }
 
   return (
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
-         {/* { currentUser && currentUser.email} */}
+          <h2 className="text-center mb-4">Sign Up as {role}</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -62,5 +61,7 @@ export default function Signup() {
         Already have an account? <Link to="/login">Log In</Link>
       </div>
     </>
-  )
-}
+  );
+};
+
+export default Signup;

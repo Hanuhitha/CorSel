@@ -14,7 +14,7 @@ export default function NavBar() {
       <ul>
         <CustomLink to="/ClassSearch">Courses</CustomLink>
         <CustomLink to="/Credits">Schedule</CustomLink>
-        <CustomLink to="/CounselingForms">CounselingForms</CustomLink>
+        <CustomLink to="/Forms">Counseling Forms</CustomLink>
       </ul>
     </nav>
     </>
@@ -23,7 +23,7 @@ export default function NavBar() {
 function CustomLink({ to, children, ...props }) {
     const resolvedPath = useResolvedPath(to)
     const isActive = useMatch({ path: resolvedPath.pathname, end: true })
-  
+
     return (
       <li className={isActive ? "active" : ""}>
         <Link to={to} {...props}>

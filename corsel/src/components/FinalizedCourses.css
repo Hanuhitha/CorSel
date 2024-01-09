@@ -1,0 +1,53 @@
+.column {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.column-title {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure the title is above the cards */
+}
+.collapsed-column {
+  overflow: hidden;
+  max-height: 60px; /* Adjust as needed */
+  transition: max-height 1s ease-out;
+}
+
+.expanded-column {
+  overflow: hidden;
+  max-height: none;
+  transition: max-height 1s ease-in;
+}
+
+.collapsed-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  max-height: 100px; /* Adjust as needed */
+  transition: max-height 1s ease-out;
+}
+
+.expanded-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  max-height: none;
+  transition: max-height 1s ease-in;
+}
+
+.collapsed-details {
+  display: none;
+  transition: opacity 1s ease-out;
+}
+
+.expanded-details {
+  display: block;
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
