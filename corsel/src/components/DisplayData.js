@@ -96,12 +96,17 @@ const DisplayData = () => {
     localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
   };
 
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-      <div style={{ flex: '0 0 48%' }}>
-        <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
-          <h5 className="card-title">Filters</h5>
-          <div>
+  return ( 
+
+<div>  
+    <div style={{ display: 'flex', justifyContent: 'space-between' ,  flexDirection: 'column', marginTop: '10px' }}>
+
+      <div style={{ marginBottom: '1px' }}>
+      
+        <div className="card" style={{ padding: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '10px', flexDirection: 'row'}}>
+       
+             <h5 className="card-title">Filters</h5>
+          
             <label htmlFor="searchQuery">Search:</label>
             <input
               type="text"
@@ -138,11 +143,13 @@ const DisplayData = () => {
                 </option>
               ))}
             </select>
-          </div>
+          
         </div>
       </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' ,  flexDirection: 'row', marginBottom: '20px' }}>
 
-      <div style={{ flex: '0 0 48%' }}>
+      <div style={{ marginBottom: '20px' }}>
         <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
           <h5 className="card-title">Courses</h5>
           <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }} onScroll={handleScroll}>
@@ -165,12 +172,17 @@ const DisplayData = () => {
         </div>
       </div>
 
-      <div style={{ flex: '0 0 100%' }}>
-        <FinalizedCourses finalizedCourses={selectedClasses} onRemove={handleRemoveClass} />
-      </div>
+      <div style={{ marginBottom: '20px' }}>
+      <div className="card" style={{ padding: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '10px' }}>
+      <FinalizedCourses finalizedCourses={selectedClasses} onRemove={handleRemoveClass} />
       <button className="btn btn-primary m-2" onClick={handleFinalizeSchedule}>
         Finalize Schedule
       </button>
+         </div>
+        
+      </div>
+      
+    </div>
     </div>
   );
 };
