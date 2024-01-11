@@ -36,7 +36,9 @@ const FinalizedCourse = ({ course, onRemove }) => {
 const FinalizedCourses = ({ finalizedCourses, onRemove }) => {
   return (
     <div>
+      <center>
       <h2>Finalized Courses</h2>
+      </center>
       {finalizedCourses ? (
         finalizedCourses.map((course, index) => (
           <FinalizedCourse key={index} course={course} onRemove={onRemove} />

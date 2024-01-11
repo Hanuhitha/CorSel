@@ -103,7 +103,7 @@ const DisplayData = () => {
 
       <div style={{ marginBottom: '1px' }}>
       
-        <div className="card" style={{ padding: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '10px', width:'85rem', margintop:'100px', flexDirection: 'row'}}>
+        <div className="card" style={{ padding: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', margintop:'100px',marginBottom: '20px', width:'85rem', flexDirection: 'row'}}>
        
              {/* <h5 className="card-title">Filters</h5> */}
           
@@ -147,7 +147,7 @@ const DisplayData = () => {
         </div>
       </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' ,  flexDirection: 'row', marginBottom: '20px' }}>
+      <div style={{flexDirection: 'row', marginBottom: '20px' }}>
 
       <div style={{ marginBottom: '20px' }}>
         <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
