@@ -87,6 +87,7 @@ const DisplayData = () => {
 
   const handleFinalizeSchedule = () => {
     console.log('Finalized Schedule:', selectedClasses);
+    alert("Finalized courses are scheduled")
     // You can send the selected classes to the central database here
   };
 
