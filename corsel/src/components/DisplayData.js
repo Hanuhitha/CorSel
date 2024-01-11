@@ -103,7 +103,7 @@ const DisplayData = () => {
 
       <div style={{ marginBottom: '1px' }}>
       
-        <div className="card" style={{ padding: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '10px', flexDirection: 'row'}}>
+        <div className="card" style={{ padding: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '30px', margintop:'100px', flexDirection: 'row'}}>
        
              <h5 className="card-title">Filters</h5>
           
