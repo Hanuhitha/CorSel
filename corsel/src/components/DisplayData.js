@@ -27,25 +27,25 @@ const DisplayData = () => {
   const [selectedClasses, setSelectedClasses] = useState([]);
   const itemsPerPage = 10;
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const fetchedData = await fetchDataFromBackend();
-      setData(fetchedData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setData({});
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await fetchDataFromBackend();
+        setData(fetchedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setData({});
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchData();
+    fetchData();
 
-  // Retrieve existing classes from local storage
-  const existingClasses = JSON.parse(localStorage.getItem('selectedClasses')) || [];
-  setSelectedClasses(existingClasses);
-}, []); // Empty dependency array ensures it runs only once on mount
+    // Retrieve existing classes from local storage
+    const existingClasses = JSON.parse(localStorage.getItem('selectedClasses')) || [];
+    setSelectedClasses(existingClasses);
+  }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
     const filterData = () => {
@@ -97,38 +97,75 @@ useEffect(() => {
   };
 
   return (
-    <div>
-      <div>
-        <FilterBar
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          subjectFilter={subjectFilter}
-          onSubjectChange={setSubjectFilter}
-          difficultyFilter={difficultyFilter}
-          onDifficultyChange={setDifficultyFilter}
-          subjects={subjects}
-          difficulties={difficulties}
-        />
-      </div>
-      <div style={{ maxHeight: '500px', overflowY: 'auto', padding: '10px', marginBottom: '20px' }} onScroll={handleScroll}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : filteredData.length === 0 ? (
-          <p>No matching data found</p>
-        ) : (
+    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+      <div style={{ flex: '0 0 48%' }}>
+        <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
+          <h5 className="card-title">Filters</h5>
           <div>
-            {filteredData
-              .slice(startIndex, startIndex + itemsPerPage)
-              .map((item, index) => (
-                <div key={index}>
-                  <CollapsibleClass classData={item} onAddClass={handleAddClass} />
-                </div>
+            <label htmlFor="searchQuery">Search:</label>
+            <input
+              type="text"
+              id="searchQuery"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="form-control mb-2"
+            />
+
+            <label htmlFor="subjectFilter">Subject:</label>
+            <select
+              id="subjectFilter"
+              value={subjectFilter}
+              onChange={(e) => setSubjectFilter(e.target.value)}
+              className="form-control mb-2"
+            >
+              {subjects.map((subject, index) => (
+                <option key={index} value={subject}>
+                  {subject}
+                </option>
               ))}
+            </select>
+
+            <label htmlFor="difficultyFilter">Difficulty:</label>
+            <select
+              id="difficultyFilter"
+              value={difficultyFilter}
+              onChange={(e) => setDifficultyFilter(e.target.value)}
+              className="form-control mb-2"
+            >
+              {difficulties.map((difficulty, index) => (
+                <option key={index} value={difficulty}>
+                  {difficulty}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
+        </div>
       </div>
 
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ flex: '0 0 48%' }}>
+        <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
+          <h5 className="card-title">Courses</h5>
+          <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }} onScroll={handleScroll}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : filteredData.length === 0 ? (
+              <p>No matching data found</p>
+            ) : (
+              <div>
+                {filteredData
+                  .slice(startIndex, startIndex + itemsPerPage)
+                  .map((item, index) => (
+                    <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px' }}>
+                      <CollapsibleClass classData={item} onAddClass={handleAddClass} />
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ flex: '0 0 100%' }}>
         <FinalizedCourses finalizedCourses={selectedClasses} onRemove={handleRemoveClass} />
       </div>
       <button className="btn btn-primary m-2" onClick={handleFinalizeSchedule}>
