@@ -107,7 +107,7 @@ const DisplayData = () => {
        
              {/* <h5 className="card-title">Filters</h5> */}
           
-            <label htmlFor="searchQuery">Search:</label>
+            <label htmlFor="searchQuery" style={{padding:'5px',fontWeight:'bold'}}>Search:</label>
             <input
               type="text"
               id="searchQuery"
@@ -116,7 +116,7 @@ const DisplayData = () => {
               className="form-control mb-2"
             />
 
-            <label htmlFor="subjectFilter">Subject:</label>
+            <label htmlFor="subjectFilter" style={{padding:'5px',fontWeight:'bold'}}>Subject:</label>
             <select
               id="subjectFilter"
               value={subjectFilter}
@@ -130,7 +130,7 @@ const DisplayData = () => {
               ))}
             </select>
 
-            <label htmlFor="difficultyFilter">Difficulty:</label>
+            <label htmlFor="difficultyFilter" style={{padding:'5px',fontWeight:'bold'}}>Difficulty:</label>
             <select
               id="difficultyFilter"
               value={difficultyFilter}
@@ -151,7 +151,7 @@ const DisplayData = () => {
 
       <div style={{ marginBottom: '20px' }}>
         <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', marginBottom: '20px' }}>
-          <h5 className="card-title">Courses</h5>
+          <h5 className="card-title" style={{fontWeight:'bold'}} >Courses</h5>
           <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }} onScroll={handleScroll}>
             {loading ? (
               <p>Loading...</p>

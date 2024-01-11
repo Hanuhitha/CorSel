@@ -37,7 +37,7 @@ const FinalizedCourses = ({ finalizedCourses, onRemove }) => {
   return (
     <div>
       <center>
-      <h2>Finalized Courses</h2>
+      <h5 style={{fontWeight:'bold'}}>Finalized Courses</h5>
       </center>
       {finalizedCourses ? (
         finalizedCourses.map((course, index) => (
