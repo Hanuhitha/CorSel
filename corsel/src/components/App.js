@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -10,6 +11,12 @@ import ClassSearch from './ClassSearch';
 import Credits from './Credits';
 import Forms from './Forms';
 import RoleSelection from './RoleSelection';
+import VolunteerValidationPage from './VolunteerValidationPage';
+import MyCommitmentsPage from './MyCommitmentsPage';
+import StatsPage from './StatsPage';
+import OpportunitiesPage from './OpportunitiesPage';
+import ExtracurricularPage from './ExtracurricularPage';
+
 
 function App() {
   return (
@@ -26,6 +33,12 @@ function App() {
               <Route path="/ClassSearch" element={<ClassSearch />} />
               <Route path="/Forms" element={<Forms />} />
               <Route path="/Credits" element={<Credits />} />
+              <Route path="/VolunteerValidationPage" element={<VolunteerValidationPage />} />
+              <Route path="/my-commitments" element={<MyCommitmentsPage />} />
+              <Route path="/stats" element={<StatsPage />} />
+              <Route path="/find-opportunities" element={<OpportunitiesPage />} />
+              <Route path="/Extracurricular" element={<ExtracurricularPage />} />
+
             </Routes>
           </div>
         </Router>
