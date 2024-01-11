@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import NavBar from './NavBar';
 
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/extracurricular';
@@ -66,45 +67,52 @@ const ExtracurricularPage = () => {
 
   return (
     <div>
-      {/* Filters */}
-      <label htmlFor="searchQuery">Search:</label>
-      <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      {/* Navigation Bar */}
+      <NavBar />
 
-      {/* Dropdown filter for Activity Type */}
-      <label htmlFor="activityTypeFilter">Filter by Activity Type:</label>
-      <select
-        id="activityTypeFilter"
-        value={activityTypeFilter}
-        onChange={(e) => setActivityTypeFilter(e.target.value)}
-      >
-        <option value="">All</option>
-        {activityTypes.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
+      {/* Rest of the content */}
+      <div style={{ marginTop: '75px' }}>
+        {/* Filters */}
+        <label htmlFor="searchQuery">Search:</label>
+        <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
 
-      {/* Display selected Activity Type filter */}
-      <p>Selected Activity Type: {activityTypeFilter || 'All'}</p>
-
-      {/* Display filtered activities */}
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          {Object.entries(filteredActivities).map(([activityName, activity]) => (
-            <div key={activityName} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-              <h3>{activity.ActivityName}</h3>
-              <p>{activity.ActivityDescription}</p>
-              {activity.ActivityAdvisor && <p>Advisor: {activity.ActivityAdvisor}</p>}
-              {activity.ActivityType && <p>Type: {activity.ActivityType}</p>}
-              {activity.Fee && <p>Fee: {activity.Fee}</p>}
-              {activity.StudentContact && <p>Contact: {activity.StudentContact}</p>}
-            </div>
+        {/* Dropdown filter for Activity Type */}
+        <label htmlFor="activityTypeFilter">Filter by Activity Type:</label>
+        <select
+          id="activityTypeFilter"
+          value={activityTypeFilter}
+          onChange={(e) => setActivityTypeFilter(e.target.value)}
+        >
+          <option value="">All</option>
+          {activityTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
           ))}
-        </div>
-      )}
+        </select>
+
+        {/* Display selected Activity Type filter */}
+        <p>Selected Activity Type: {activityTypeFilter || 'All'}</p>
+
+        {/* Display filtered activities */}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {Object.entries(filteredActivities).map(([activityName, activity]) => (
+              <div key={activityName} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+                <h3>{activity.ActivityName}</h3>
+                <p>{activity.ActivityDescription}</p>
+                {activity.ActivityAdvisor && <p>Advisor: {activity.ActivityAdvisor}</p>}
+                {activity.ActivityType && <p>Type: {activity.ActivityType}</p>}
+                {activity.Fee && <p>Fee: {activity.Fee}</p>}
+                {activity.StudentContact && <p>Contact: {activity.StudentContact}</p>}
+                {activity.MeetingTime && <p>Meeting Details: {activity.MeetingTime}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
