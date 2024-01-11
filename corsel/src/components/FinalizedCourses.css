@@ -1,6 +1,8 @@
 .column {
   flex: 1;
   margin-right: 20px;
+  background-color: #b3d7ed; /* Light blue background color for columns */
+  border-radius: 10px; /* Optional: Add border radius for rounded corners */
 }
 
 .column-title {
@@ -11,6 +13,7 @@
   top: 0;
   z-index: 1; /* Ensure the title is above the cards */
 }
+
 .collapsed-column {
   overflow: hidden;
   max-height: 60px; /* Adjust as needed */
@@ -24,21 +27,25 @@
 }
 
 .collapsed-card {
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Keep the existing border color */
   padding: 10px;
   margin-bottom: 10px;
   overflow: hidden;
   max-height: 100px; /* Adjust as needed */
   transition: max-height 1s ease-out;
+  background-color: #b3d7ed; /* Light blue background color for cards */
+  border-radius: 10px; /* Optional: Add border radius for rounded corners */
 }
 
 .expanded-card {
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Keep the existing border color */
   padding: 10px;
   margin-bottom: 10px;
   overflow: hidden;
   max-height: none;
   transition: max-height 1s ease-in;
+  background-color: #b3d7ed; /* Light blue background color for cards */
+  border-radius: 10px; /* Optional: Add border radius for rounded corners */
 }
 
 .collapsed-details {
