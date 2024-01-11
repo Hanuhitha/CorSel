@@ -8,7 +8,6 @@ const FinalizedCourse = ({ course, onRemove }) => {
     setCardExpanded(value);
   };
 
-
   return (
     <div
       className={isCardExpanded ? 'expanded-card' : 'collapsed-card'}
@@ -35,8 +34,8 @@ const FinalizedCourse = ({ course, onRemove }) => {
 
 const FinalizedCourses = ({ finalizedCourses, onRemove }) => {
   return (
-    <div>
-      <h2>Finalized Courses</h2>
+    <div style={{ textAlign: 'center' }}>
+      <h2 style={{ fontSize: '1.5rem' }}>Finalized Courses</h2>
       {finalizedCourses ? (
         finalizedCourses.map((course, index) => (
           <FinalizedCourse key={index} course={course} onRemove={onRemove} />

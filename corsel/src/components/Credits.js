@@ -4,31 +4,24 @@ import FinalizedCourses from './FinalizedCourses';
 import CreditBreakdown from './CreditBreakdown';
 
 const Credits = () => {
-  // Retrieve finalized courses from local storage or any other source
   const [finalizedCourses, setFinalizedCourses] = useState(
     JSON.parse(localStorage.getItem('selectedClasses')) || []
   );
 
-  // Function to remove a course from the schedule
   const handleRemove = (removedCourse) => {
-    // Filter out the removed course from the list
     const updatedCourses = finalizedCourses.filter(
       (course) => course.courseInfo_courseName !== removedCourse.courseInfo_courseName
     );
 
-    // Update state with the new list of finalized courses
     setFinalizedCourses(updatedCourses);
-
-    // Update local storage with the new list
     localStorage.setItem('selectedClasses', JSON.stringify(updatedCourses));
   };
 
-  // Function to organize finalized courses into separate arrays based on courseYear
   const organizeCoursesByYear = () => {
     const coursesByYear = {};
 
     finalizedCourses.forEach(course => {
-      const year = course.courseYear || 'Uncategorized'; // Use 'Uncategorized' if courseYear is undefined
+      const year = course.courseYear || 'Uncategorized';
 
       if (coursesByYear[year]) {
         coursesByYear[year].push(course);
@@ -40,10 +33,7 @@ const Credits = () => {
     return coursesByYear;
   };
 
-  // Organize finalized courses by year
   const coursesByYear = organizeCoursesByYear();
-
-  // Map the numeric year to its corresponding string
   const yearMappings = {
     1: 'Freshman',
     2: 'Sophomore',
@@ -52,12 +42,31 @@ const Credits = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '2cm' }}>
       <NavBar />
       <div style={{ display: 'flex' }}>
-        {[1, 2, 3, 4].map((yearNumber) => (
-          <div key={yearNumber} style={{ flex: 1, marginRight: '20px' }}>
-            <h3>{`${yearMappings[yearNumber]} Year`}</h3>
+        {[1, 2, 3, 4].map((yearNumber, index, array) => (
+          <div
+            key={yearNumber}
+            style={{
+              flex: 1,
+              marginRight: index === array.length - 1 ? '10px' : '0px', // Adjust the margin for the last column
+              marginLeft: index === 0 ? '10px' : '0px', // Adjust the margin for the first column
+              borderRadius: '1rem',
+              boxShadow: '0px 0px 8px #999',
+              display: 'flex',
+              flexDirection: 'column',
+              margin: '1rem',
+              backgroundColor: 'whitesmoke',
+              height: 'fit-content',
+              overflow: 'auto',
+              padding: '1rem',
+              width: '265px',
+            }}
+          >
+            <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
+              {`${yearMappings[yearNumber]} Year`}
+            </h3>
             <FinalizedCourses
               finalizedCourses={coursesByYear[yearNumber]}
               onRemove={handleRemove}
@@ -65,7 +74,22 @@ const Credits = () => {
             {/* Add other content related to courses if needed */}
           </div>
         ))}
-        <div style={{ flex: 1 }}>
+        <div
+          style={{
+            flex: 1,
+            marginRight: '10px', // Adjust the margin to reduce space between cards
+            borderRadius: '1rem',
+            boxShadow: '0px 0px 8px #999',
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '1rem',
+            backgroundColor: 'whitesmoke',
+            height: 'fit-content',
+            overflow: 'auto',
+            padding: '1rem',
+            width: '250px',
+          }}
+        >
           <CreditBreakdown finalizedCourses={finalizedCourses} />
         </div>
       </div>
