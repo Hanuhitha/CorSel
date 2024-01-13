@@ -66,17 +66,14 @@ const ExtracurricularPage = () => {
   }, [searchQuery, activityTypeFilter, activities]);
 
   return (
-    <div>
-      {/* Navigation Bar */}
-      <NavBar />
+    <div style={{ display: 'flex', marginLeft: '10%', marginRight: '10%', marginTop: '75px' }}>
+      {/* Filters on the Left */}
+      <div style={{ flex: '1', marginRight: '20px', border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke', fontFamily: '\'Chess Club Font\', sans-serif' }}>
+        <h2 style={{ textAlign: 'center', fontWeight: 'normal', marginBottom: '5px' }}>Filter</h2>
 
-      {/* Rest of the content */}
-      <div style={{ marginTop: '75px' }}>
-        {/* Filters */}
         <label htmlFor="searchQuery">Search:</label>
         <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
 
-        {/* Dropdown filter for Activity Type */}
         <label htmlFor="activityTypeFilter">Filter by Activity Type:</label>
         <select
           id="activityTypeFilter"
@@ -91,16 +88,19 @@ const ExtracurricularPage = () => {
           ))}
         </select>
 
-        {/* Display selected Activity Type filter */}
         <p>Selected Activity Type: {activityTypeFilter || 'All'}</p>
+      </div>
 
-        {/* Display filtered activities */}
+      {/* Extracurricular Content */}
+      <div style={{ flex: '2' }}>
+        <NavBar />
+
         {loading ? (
           <p>Loading...</p>
         ) : (
           <div>
             {Object.entries(filteredActivities).map(([activityName, activity]) => (
-              <div key={activityName} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+              <div key={activityName} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke' }}>
                 <h3>{activity.ActivityName}</h3>
                 <p>{activity.ActivityDescription}</p>
                 {activity.ActivityAdvisor && <p>Advisor: {activity.ActivityAdvisor}</p>}
