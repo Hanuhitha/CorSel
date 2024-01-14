@@ -13,10 +13,10 @@ import Forms from './Forms';
 import RoleSelection from './RoleSelection';
 import VolunteerValidationPage from './VolunteerValidationPage';
 import MyCommitmentsPage from './MyCommitmentsPage';
-import StatsPage from './StatsPage';
+import VolunteerStatsPage from './VolunteerStatsPage';
 import OpportunitiesPage from './OpportunitiesPage';
 import ExtracurricularPage from './ExtracurricularPage';
-
+import StaffAdditionPage from './StaffAdditionPage';
 
 function App() {
   return (
@@ -35,10 +35,10 @@ function App() {
               <Route path="/Credits" element={<Credits />} />
               <Route path="/VolunteerValidationPage" element={<VolunteerValidationPage />} />
               <Route path="/my-commitments" element={<MyCommitmentsPage />} />
-              <Route path="/stats" element={<StatsPage />} />
+              <Route path="/VolunteeringStats" element={<VolunteerStatsPage />} />
               <Route path="/find-opportunities" element={<OpportunitiesPage />} />
               <Route path="/Extracurricular" element={<ExtracurricularPage />} />
-
+              <Route path="/addOpportunity" element={<StaffAdditionPage />} />
             </Routes>
           </div>
         </Router>

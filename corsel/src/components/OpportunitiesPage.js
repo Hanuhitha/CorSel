@@ -1,72 +1,109 @@
 import React, { useState, useEffect } from 'react';
+import NavBar from './NavBar';
+
+const fetchDataFromBackend = async () => {
+  const apiUrl = 'http://localhost:4000/volunteeropportunities';
+
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      console.error(`Error fetching data. Status: ${response.status}`);
+      throw new Error(`Error fetching data. Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data || {};
+  } catch (error) {
+    console.error('Network error:', error);
+    return {};
+  }
+};
 
 const OpportunitiesPage = () => {
-  const [opportunities, setOpportunities] = useState([]);
-  const [newOpportunity, setNewOpportunity] = useState({
-    title: '',
-    description: '',
-    // Add other fields as needed
-  });
+  const [opportunities, setOpportunities] = useState({});
+  const [filteredOpportunities, setFilteredOpportunities] = useState({});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [durationFilter, setDurationFilter] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch opportunities from the database
-    // Replace the following with your actual API endpoint or database query
-    fetch('your-api-endpoint-for-opportunities')
-      .then(response => response.json())
-      .then(data => setOpportunities(data));
+    const fetchOpportunities = async () => {
+      try {
+        const fetchedOpportunities = await fetchDataFromBackend();
+        console.log('Fetched Opportunities:', fetchedOpportunities);
+
+        setOpportunities(fetchedOpportunities);
+        setFilteredOpportunities(fetchedOpportunities);
+      } catch (error) {
+        console.error('Error fetching opportunities:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOpportunities();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewOpportunity({
-      ...newOpportunity,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    // Filter logic goes here
+    // Update setFilteredOpportunities based on searchQuery or other filters
 
-  const handleAddOpportunity = () => {
-    // Add logic for adding opportunity to the database
-    // You can send a POST request to your API with the new opportunity data
-    // After successfully adding, you can update the local state to reflect the changes
-    console.log('Adding opportunity:', newOpportunity);
-  };
+    const filtered = Object.entries(opportunities).filter(
+      ([opportunityId, opportunity]) =>
+        opportunityId.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (durationFilter ? opportunity.Duration === durationFilter : true)
+    );
+
+    // Convert filtered array back to an object
+    const filteredOpportunitiesObject = Object.fromEntries(filtered);
+    setFilteredOpportunities(filteredOpportunitiesObject);
+  }, [searchQuery, durationFilter, opportunities]);
 
   return (
-    <div>
-      <h2>Find Opportunities</h2>
+    <div style={{ display: 'flex', marginLeft: '10%', marginRight: '10%', marginTop: '75px' }}>
+      {/* Filters on the Left */}
+      <div style={{ flex: '1', marginRight: '20px', border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke', fontFamily: '\'Chess Club Font\', sans-serif' }}>
+        <h2 style={{ textAlign: 'center', fontWeight: 'normal', marginBottom: '5px' }}>Filter</h2>
 
-      {/* Display existing opportunities */}
-      <div>
-        <h3>Available Opportunities</h3>
-        <ul>
-          {opportunities.map((opportunity, index) => (
-            <li key={index}>
-              <strong>{opportunity.title}</strong>: {opportunity.description}
-              {/* Add other details as needed */}
-            </li>
-          ))}
-        </ul>
+        <label htmlFor="searchQuery">Search:</label>
+        <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+
+        <label htmlFor="durationFilter">Filter by Duration:</label>
+        <select
+          id="durationFilter"
+          value={durationFilter}
+          onChange={(e) => setDurationFilter(e.target.value)}
+        >
+          <option value="">All</option>
+          {/* Add duration options based on your data */}
+        </select>
+
+        <p>Selected Duration: {durationFilter || 'All'}</p>
       </div>
 
-      {/* Form to add new opportunity */}
-      <div>
-        <h3>Add New Opportunity</h3>
-        <form>
-          <label>
-            Title:
-            <input type="text" name="title" value={newOpportunity.title} onChange={handleInputChange} />
-          </label>
-          <br />
-          <label>
-            Description:
-            <textarea name="description" value={newOpportunity.description} onChange={handleInputChange} />
-          </label>
-          {/* Add other input fields as needed */}
-          <br />
-          <button type="button" onClick={handleAddOpportunity}>
-            Add Opportunity
-          </button>
-        </form>
+      {/* Opportunities Content */}
+      <div style={{ flex: '2' }}>
+        <NavBar />
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {Object.entries(filteredOpportunities).map(([opportunityId, opportunity]) => (
+              <div key={opportunityId} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke' }}>
+                <h3>{opportunity.Title}</h3>
+                <p>{opportunity.Description}</p>
+                {opportunity.Organization && <p>Organization: {opportunity.Organization}</p>}
+                {opportunity.Location && <p>Location: {opportunity.Location}</p>}
+                {opportunity.DateAndTime && <p>Date and Time: {opportunity.DateAndTime}</p>}
+                {opportunity.Duration && <p>Duration: {opportunity.Duration}</p>}
+                {opportunity.SkillsRequired && <p>Skills Required: {opportunity.SkillsRequired}</p>}
+                {opportunity.ContactInformation && <p>Contact: {opportunity.ContactInformation}</p>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

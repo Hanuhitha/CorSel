@@ -28,7 +28,7 @@ const VolunteerValidationPage = () => {
       </div>
 
       <div style={{ marginTop: '20px' }}>
-        <Link to="/stats">
+        <Link to="/VolunteeringStats">
           <button>View Stats & Goals</button>
         </Link>
       </div>

@@ -9,8 +9,9 @@ export default function LandingPage() {
     <div>
       <NavBar />
 
-      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
-        <div style={{ marginRight: '5%' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap' }}>
+        {/* Courses */}
+        <div style={{ margin: '0 5% 5% 0' }}>
           <Link to='/ClassSearch'>
             <Card
               imgSrc=''
@@ -19,13 +20,14 @@ export default function LandingPage() {
               description=''
               buttonText=''
               link='/ClassSearch'
-              width='15rem'
+              width='20rem'
               className='custom-card'
             />
           </Link>
         </div>
 
-        <div>
+        {/* Schedule */}
+        <div style={{ margin: '0 5% 5% 0' }}>
           <Link to='/Credits'>
             <Card
               imgSrc=''
@@ -34,12 +36,13 @@ export default function LandingPage() {
               description=''
               buttonText=''
               link='/Credits'
-              width='15rem'
+              width='20rem'
             />
           </Link>
         </div>
 
-        <div style={{ marginLeft: '5%' }}>
+        {/* Forms */}
+        <div style={{ margin: '0 5% 5% 0' }}>
           <Link to='/Forms'>
             <Card
               imgSrc=''
@@ -48,13 +51,13 @@ export default function LandingPage() {
               description=''
               buttonText=''
               link='/Forms'
-              width='15rem'
+              width='20rem'
             />
           </Link>
         </div>
 
-        {/* Add the Extracurricular Activities button here */}
-        <div style={{ marginLeft: '5%' }}>
+        {/* Extracurricular */}
+        <div style={{ margin: '0 5% 5% 0' }}>
           <Link to='/Extracurricular'>
             <Card
               imgSrc=''
@@ -63,24 +66,40 @@ export default function LandingPage() {
               description=''
               buttonText=''
               link='/Extracurricular'
-              width='15rem'
+              width='20rem'
             />
           </Link>
         </div>
-      </div>
 
-      <div style={{ marginLeft: '5%' }}>
-        <Link to='/VolunteerValidationPage'>
-          <Card
-            imgSrc=''
-            imgAlt='Courses list will be provided here'
-            title='Volunteer Hours'
-            description=''
-            buttonText=''
-            link='/VolunteerValidationPage'
-            width='15rem'
-          />
-        </Link>
+        {/* Volunteer Hours */}
+        <div style={{ margin: '0 5% 5% 0' }}>
+          <Link to='/VolunteerValidationPage'>
+            <Card
+              imgSrc=''
+              imgAlt='Courses list will be provided here'
+              title='Volunteer Hours'
+              description=''
+              buttonText=''
+              link='/VolunteerValidationPage'
+              width='20rem'
+            />
+          </Link>
+        </div>
+
+        {/* Opportunities */}
+        <div style={{ margin: '0 5% 5% 0' }}>
+          <Link to='/addOpportunity'>
+            <Card
+              imgSrc=''
+              imgAlt='Opportunities list will be provided here'
+              title='Add Opportunity'
+              description=''
+              buttonText=''
+              link='/addOpportunity'
+              width='20rem'
+            />
+          </Link>
+        </div>
       </div>
     </div>
   );
