@@ -1,0 +1,13 @@
+/* Media queries for responsiveness */
+@media only screen and (max-width: 600px) {
+    .display-container {
+      flex-direction: column;
+    }
+  
+    .filter-container,
+    .courses-container,
+    .finalized-container {
+      width: 100%;
+    }
+  }
+  
