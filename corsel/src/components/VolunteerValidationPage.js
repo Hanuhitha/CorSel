@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NavBar from './NavBar';
 
 const VolunteerValidationPage = () => {
   const [formData, setFormData] = useState({
@@ -15,28 +16,26 @@ const VolunteerValidationPage = () => {
   };
 
   return (
-    <div>
-      <h2>Volunteer Validation</h2>
-      <form onSubmit={handleSubmit}>
-        {/* ... (form inputs) */}
-      </form>
+    <div style={{ marginTop: '2cm' }}>
+      <NavBar />
+      <div className="d-flex justify-content-center">
+        <div style={{ margin: '20px' }}>
+          <Link to="/my-commitments">
+            <button className="btn btn-primary">My Commitments</button>
+          </Link>
+        </div>
 
-      <div style={{ marginTop: '20px' }}>
-        <Link to="/my-commitments">
-          <button>My Commitments</button>
-        </Link>
-      </div>
+        <div style={{ margin: '20px' }}>
+          <Link to="/VolunteeringStats">
+            <button className="btn btn-primary">View Stats & Goals</button>
+          </Link>
+        </div>
 
-      <div style={{ marginTop: '20px' }}>
-        <Link to="/VolunteeringStats">
-          <button>View Stats & Goals</button>
-        </Link>
-      </div>
-
-      <div style={{ marginTop: '20px' }}>
-        <Link to="/find-opportunities">
-          <button>Find Opportunities</button>
-        </Link>
+        <div style={{ margin: '20px' }}>
+          <Link to="/find-opportunities">
+            <button className="btn btn-primary">Find Opportunities</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

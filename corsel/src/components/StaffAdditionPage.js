@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddClassForm from './AddClassForm';
 import AddExtracurricularForm from './AddExtracurricularForm';
 import AddVolunteerOpportunityForm from './AddVolunteerOpportunityForm';
+import NavBar from './NavBar';
 
 const StaffAdditionPage = () => {
   const [selectedType, setSelectedType] = useState(null);
@@ -11,41 +12,19 @@ const StaffAdditionPage = () => {
   };
 
   return (
-    <div>
-      <h2>Staff Addition Page</h2>
-
-      <form>
-        <p>Select the type of addition:</p>
-        <label>
-          <input
-            type="radio"
-            name="additionType"
-            value="classes"
-            onChange={() => handleTypeSelection('classes')}
-          />
+    <div style={{ marginTop: '2cm' }}>
+      <NavBar />
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-primary m-2" onClick={() => handleTypeSelection('classes')}>
           Add Class
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="additionType"
-            value="extracurriculars"
-            onChange={() => handleTypeSelection('extracurriculars')}
-          />
+        </button>
+        <button className="btn btn-primary m-2" onClick={() => handleTypeSelection('extracurriculars')}>
           Add Extracurricular
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="additionType"
-            value="volunteerOpportunities"
-            onChange={() => handleTypeSelection('volunteerOpportunities')}
-          />
+        </button>
+        <button className="btn btn-primary m-2" onClick={() => handleTypeSelection('volunteerOpportunities')}>
           Add Volunteer Opportunity
-        </label>
-      </form>
+        </button>
+      </div>
 
       {selectedType && (
         <>

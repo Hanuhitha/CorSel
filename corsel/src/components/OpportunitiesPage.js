@@ -63,23 +63,11 @@ const OpportunitiesPage = () => {
   return (
     <div style={{ display: 'flex', marginLeft: '10%', marginRight: '10%', marginTop: '75px' }}>
       {/* Filters on the Left */}
-      <div style={{ flex: '1', marginRight: '20px', border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke', fontFamily: '\'Chess Club Font\', sans-serif' }}>
-        <h2 style={{ textAlign: 'center', fontWeight: 'normal', marginBottom: '5px' }}>Filter</h2>
+      <div style={{ flex: '1', marginRight: '20px', border: '1px solid #ccc', padding: '20px', marginBottom: '20px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: '#f4f4f4', maxHeight: '200px', overflowY: 'auto' }}>
+        <h5 style={{ textAlign: 'center', fontWeight: 'normal', marginBottom: '10px' }}>Filter</h5>
 
         <label htmlFor="searchQuery">Search:</label>
-        <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-
-        <label htmlFor="durationFilter">Filter by Duration:</label>
-        <select
-          id="durationFilter"
-          value={durationFilter}
-          onChange={(e) => setDurationFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          {/* Add duration options based on your data */}
-        </select>
-
-        <p>Selected Duration: {durationFilter || 'All'}</p>
+        <input type="text" id="searchQuery" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="form-control mb-2" />
       </div>
 
       {/* Opportunities Content */}
@@ -91,7 +79,7 @@ const OpportunitiesPage = () => {
         ) : (
           <div>
             {Object.entries(filteredOpportunities).map(([opportunityId, opportunity]) => (
-              <div key={opportunityId} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke' }}>
+              <div key={opportunityId} style={{ border: '1px solid #ccc', padding: '20px', marginBottom: '20px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: 'whitesmoke', width: '100%' }}>
                 <h3>{opportunity.Title}</h3>
                 <p>{opportunity.Description}</p>
                 {opportunity.Organization && <p>Organization: {opportunity.Organization}</p>}
