@@ -11,10 +11,6 @@ const CollapsibleClass = ({ classData, onAddClass, onRemoveClass }) => {
     onAddClass(classData);
   };
 
-  const handleRemoveClass = () => {
-    onRemoveClass(classData.sectionInfo_teacherDisplay);
-  };
-
   return (
     <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }} onClick={toggleCollapse}>
@@ -28,9 +24,6 @@ const CollapsibleClass = ({ classData, onAddClass, onRemoveClass }) => {
           <p>Credits: {classData.Credits}</p>
           <button className="btn btn-primary m-2" onClick={handleAddClass}>
             Add Class
-          </button>
-          <button className="btn btn-danger m-2" onClick={handleRemoveClass}>
-            Remove Class
           </button>
         </div>
       )}
