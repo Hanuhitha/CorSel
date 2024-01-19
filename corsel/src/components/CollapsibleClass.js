@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CollapsibleClass = ({ classData, onAddClass, onRemoveClass }) => {
+const CollapsibleClass = ({ classData, onAddClass }) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleCollapse = () => {

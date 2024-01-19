@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import NavBar from './NavBar';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 import FinalizedCourses from './FinalizedCourses';
 import CreditBreakdown from './CreditBreakdown';
 
@@ -7,6 +10,7 @@ const Credits = () => {
   const [finalizedCourses, setFinalizedCourses] = useState(
     JSON.parse(localStorage.getItem('selectedClasses')) || []
   );
+  const captureRef = useRef(null);
 
   const handleRemove = (removedCourse) => {
     const updatedCourses = finalizedCourses.filter(
@@ -41,9 +45,27 @@ const Credits = () => {
     4: 'Senior',
   };
 
+  const handleCaptureSnapshot = () => {
+    if (captureRef.current) {
+      html2canvas(captureRef.current).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('snapshot.pdf');
+      });
+    }
+  };
+
   return (
     <div style={{ marginTop: '2cm' }}>
       <NavBar />
+      <div style={{marginLeft:'2%'}} >
+        <button className="btn btn-primary m-2" onClick={handleCaptureSnapshot}>Download Snapshot</button>
+      </div>
+      <div ref={captureRef}>
       <div style={{ display: 'flex' }}>
         {[1, 2, 3, 4].map((yearNumber, index, array) => (
           <div
@@ -92,6 +114,7 @@ const Credits = () => {
         >
           <CreditBreakdown finalizedCourses={finalizedCourses} />
         </div>
+      </div>
       </div>
     </div>
   );
