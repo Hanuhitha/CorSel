@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './FinalizedCourses.css'; // Import the CSS file
 
-const FinalizedCourse = ({ course, onRemove }) => {
+const FinalizedCourse = ({ course, onRemove, onAdd }) => {
   const [isCardExpanded, setCardExpanded] = useState(false);
 
   const handleCardHover = (value) => {
@@ -32,12 +32,17 @@ const FinalizedCourse = ({ course, onRemove }) => {
   );
 };
 
-const FinalizedCourses = ({ finalizedCourses, onRemove }) => {
+const FinalizedCourses = ({ finalizedCourses, onRemove, onAdd }) => {
   return (
     <div style={{ textAlign: 'center', marginTop: 'auto' }}>
       {finalizedCourses ? (
         finalizedCourses.map((course, index) => (
-          <FinalizedCourse key={index} course={course} onRemove={onRemove} />
+          <FinalizedCourse
+            key={index}
+            course={course}
+            onRemove={onRemove}
+            onAdd={() => onAdd(course.sectionInfo_teacherDisplay)}
+          />
         ))
       ) : (
         <p>No finalized courses available</p>

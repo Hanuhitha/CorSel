@@ -1,3 +1,5 @@
+// Signup.js
+
 import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
@@ -23,7 +25,7 @@ const Signup = () => {
     try {
       setError('');
       setLoading(false);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(emailRef.current.value, passwordRef.current.value, role); // Pass the role during signup
       navigate('/home');
     } catch {
       setError('');
