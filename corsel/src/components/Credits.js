@@ -62,18 +62,41 @@ const Credits = () => {
   return (
     <div style={{ marginTop: '2cm' }}>
       <NavBar />
-      <div style={{marginLeft:'2%'}} >
-        <button className="btn btn-primary m-2" onClick={handleCaptureSnapshot}>Download Snapshot</button>
-      </div>
       <div ref={captureRef}>
-      <div style={{ display: 'flex' }}>
-        {[1, 2, 3, 4].map((yearNumber, index, array) => (
+        <div style={{ display: 'flex' }}>
+          {[1, 2, 3, 4].map((yearNumber, index, array) => (
+            <div
+              key={yearNumber}
+              style={{
+                flex: 1,
+                marginRight: index === array.length - 1 ? '10px' : '0px',
+                marginLeft: index === 0 ? '10px' : '0px',
+                borderRadius: '1rem',
+                boxShadow: '0px 0px 8px #999',
+                display: 'flex',
+                flexDirection: 'column',
+                margin: '1rem',
+                backgroundColor: 'whitesmoke',
+                height: 'fit-content',
+                overflow: 'auto',
+                padding: '1rem',
+                width: '265px',
+              }}
+            >
+              <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
+                {`${yearMappings[yearNumber]} Year`}
+              </h3>
+              <FinalizedCourses
+                finalizedCourses={coursesByYear[yearNumber]}
+                onRemove={handleRemove}
+              />
+              {/* Add other content related to courses if needed */}
+            </div>
+          ))}
           <div
-            key={yearNumber}
             style={{
               flex: 1,
-              marginRight: index === array.length - 1 ? '10px' : '0px', // Adjust the margin for the last column
-              marginLeft: index === 0 ? '10px' : '0px', // Adjust the margin for the first column
+              marginRight: '10px',
               borderRadius: '1rem',
               boxShadow: '0px 0px 8px #999',
               display: 'flex',
@@ -83,38 +106,13 @@ const Credits = () => {
               height: 'fit-content',
               overflow: 'auto',
               padding: '1rem',
-              width: '265px',
+              width: '250px',
             }}
           >
-            <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
-              {`${yearMappings[yearNumber]} Year`}
-            </h3>
-            <FinalizedCourses
-              finalizedCourses={coursesByYear[yearNumber]}
-              onRemove={handleRemove}
-            />
-            {/* Add other content related to courses if needed */}
+            <CreditBreakdown finalizedCourses={finalizedCourses} />
+            <button className="btn btn-primary m-2" onClick={handleCaptureSnapshot}>Download Snapshot</button>
           </div>
-        ))}
-        <div
-          style={{
-            flex: 1,
-            marginRight: '10px', // Adjust the margin to reduce space between cards
-            borderRadius: '1rem',
-            boxShadow: '0px 0px 8px #999',
-            display: 'flex',
-            flexDirection: 'column',
-            margin: '1rem',
-            backgroundColor: 'whitesmoke',
-            height: 'fit-content',
-            overflow: 'auto',
-            padding: '1rem',
-            width: '250px',
-          }}
-        >
-          <CreditBreakdown finalizedCourses={finalizedCourses} />
         </div>
-      </div>
       </div>
     </div>
   );

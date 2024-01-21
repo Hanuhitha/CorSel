@@ -6,7 +6,7 @@ const ClassCart = ({ classesInCart, onRemoveClass, onAddCourses }) => {
     <div className="class-cart card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px', marginBottom: '20px' }}>
     <h5 className="card-title">Class Cart</h5>
       {classesInCart.length === 0 ? (
-        <p>No classes added to the cart</p>
+        <p>Add classes to the cart</p>
       ) : (
         <div>
           {classesInCart.map((classData, index) => (

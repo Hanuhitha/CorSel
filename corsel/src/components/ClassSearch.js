@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import CollapsibleClass from './CollapsibleClass';
-import FinalizedCourses from './FinalizedCourses';
 import { useNavigate } from 'react-router-dom';
 import { useClassContext } from './ClassContext';
 import ClassCart from './ClassCart';
@@ -26,8 +25,7 @@ const ClassSearch = () => {
   const [subjectFilter, setSubjectFilter] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
   const [loading, setLoading] = useState(true);
-  const [startIndex, setStartIndex] = useState(0);
-
+  
   const handleResetFilters = () => {
     setSubjectFilter('');
     setDifficultyFilter('');
@@ -35,10 +33,7 @@ const ClassSearch = () => {
 
   // State to keep track of classes added to the Class Cart
   const [classesInCart, setClassesInCart] = useState([]);
-  const { selectedClasses, setSelectedClasses, resetSelectedClasses } = useClassContext();
-
-  // Define itemsPerPage
-  const itemsPerPage = 10;
+  const { selectedClasses, setSelectedClasses } = useClassContext();
 
   // Use useHistory for navigation
   const history = useNavigate();
@@ -87,13 +82,6 @@ const ClassSearch = () => {
 
   const subjects = ['Math', 'English', 'Social Studies', 'Science', 'Foreign Language', 'Art', 'MISC'];
   const difficulties = ['REG', 'HON', 'AP'];
-
-  const handleScroll = (e) => {
-    const element = e.target;
-    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-      setStartIndex((prevIndex) => Math.min(prevIndex + itemsPerPage, filteredData.length));
-    }
-  };
 
   const handleAddClass = (classData) => {
     // Add the class to the Class Cart state
@@ -181,7 +169,7 @@ const ClassSearch = () => {
         </div>
 
         {/* Courses Card (Wider) */}
-        <div style={{ flex: '0 0 50%', maxWidth: '50%', marginBottom: '20px' }}>
+        <div style={{ flex: '0 0 50%', maxWidth: '47%', marginBottom: '20px' }}>
           <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
             {/* Set a min-height value based on your design preferences */}
             <h5 className="card-title">Courses</h5>
@@ -193,7 +181,7 @@ const ClassSearch = () => {
               ) : (
                 <div>
                   {filteredData.map((item, index) => (
-                    <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '0px' }}>
+                    <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '20px' }}>
                       {/* Adjust the minWidth value based on your preference */}
                       <CollapsibleClass classData={item} onAddClass={handleAddClass} />
                     </div>
@@ -206,7 +194,7 @@ const ClassSearch = () => {
 
         {/* Class Cart */}
         <ClassCart
-          classesInCart={classesInCart} // Pass the classesInCart state to ClassCart
+          classesInCart={classesInCart}
           onRemoveClass={handleRemoveClass}
           onAddCourses={handleAddCourses}
         />

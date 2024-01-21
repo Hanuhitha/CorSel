@@ -29,13 +29,13 @@
   background-color: #dc3545;
   color: #fff;
 }
-
 .remove-button-container {
   overflow: hidden;
   height: 0;
   transition: height 0.3s ease;
 }
 
+/* Add this style to show the remove button on hover */
 .class-cart-item:hover .remove-button-container {
   height: auto;
 }
