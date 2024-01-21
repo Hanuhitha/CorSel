@@ -4,6 +4,7 @@ import CollapsibleClass from './CollapsibleClass';
 import FinalizedCourses from './FinalizedCourses';
 import { useNavigate } from 'react-router-dom';
 import { useClassContext } from './ClassContext';
+import ClassCart from './ClassCart';
 
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
@@ -27,6 +28,13 @@ const ClassSearch = () => {
   const [loading, setLoading] = useState(true);
   const [startIndex, setStartIndex] = useState(0);
 
+  const handleResetFilters = () => {
+    setSubjectFilter('');
+    setDifficultyFilter('');
+  };
+
+  // State to keep track of classes added to the Class Cart
+  const [classesInCart, setClassesInCart] = useState([]);
   const { selectedClasses, setSelectedClasses, resetSelectedClasses } = useClassContext();
 
   // Define itemsPerPage
@@ -70,7 +78,7 @@ const ClassSearch = () => {
         );
         setFilteredData(filtered);
       } else {
-        setFilteredData({});
+        setFilteredData([]);
       }
     };
 
@@ -88,26 +96,34 @@ const ClassSearch = () => {
   };
 
   const handleAddClass = (classData) => {
-    const updatedSelectedClasses = [...selectedClasses, classData];
-    setSelectedClasses(updatedSelectedClasses);
-    localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
-  };
-
-  const handleFinalizeSchedule = () => {
-    console.log('Finalized Schedule:', selectedClasses);
-
-    // Update finalized courses in localStorage
-    localStorage.setItem('selectedClasses', JSON.stringify(selectedClasses));
-
-    // Redirect to the Credits page after finalizing schedule
-    history('/Credits');
+    // Add the class to the Class Cart state
+    setClassesInCart((prevClasses) => [...prevClasses, classData]);
   };
 
   const handleRemoveClass = (classToRemove) => {
-    const updatedSelectedClasses = selectedClasses.filter((classData) => classData !== classToRemove);
-    setSelectedClasses(updatedSelectedClasses);
-    localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
+    // Remove the class from the Class Cart state
+    const updatedClassesInCart = classesInCart.filter((classData) => classData !== classToRemove);
+    setClassesInCart(updatedClassesInCart);
   };
+
+
+  const handleAddCourses = () => {
+    // Add logic to send selected classes to the backend or perform any other action
+
+    // Move classes from Class Cart to selectedClasses
+    const updatedSelectedClasses = [...selectedClasses, ...classesInCart];
+    setSelectedClasses(updatedSelectedClasses);
+
+    // Clear the Class Cart state
+    setClassesInCart([]);
+
+    // Update localStorage
+    localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
+
+    // Redirect to the Credits page after adding courses
+    history('/Credits');
+  };
+
 
   return (
     <div>
@@ -134,6 +150,7 @@ const ClassSearch = () => {
                 onChange={(e) => setSubjectFilter(e.target.value)}
                 className="form-control mb-2"
               >
+                <option value="">Select Subject</option>
                 {subjects.map((subject, index) => (
                   <option key={index} value={subject}>
                     {subject}
@@ -148,50 +165,51 @@ const ClassSearch = () => {
                 onChange={(e) => setDifficultyFilter(e.target.value)}
                 className="form-control mb-2"
               >
+                <option value="">Select Difficulty</option>
                 {difficulties.map((difficulty, index) => (
                   <option key={index} value={difficulty}>
                     {difficulty}
                   </option>
                 ))}
               </select>
+
+              <button className="btn btn-secondary" onClick={handleResetFilters}>
+                Reset Filters
+              </button>
             </div>
           </div>
         </div>
 
         {/* Courses Card (Wider) */}
-        <div style={{ flex: '0 0 50%', marginBottom: '20px' }}>
-          <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4' }}>
+        <div style={{ flex: '0 0 50%', maxWidth: '50%', marginBottom: '20px' }}>
+          <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
+            {/* Set a min-height value based on your design preferences */}
             <h5 className="card-title">Courses</h5>
-            <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }} onScroll={handleScroll}>
+            <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }}>
               {loading ? (
                 <p>Loading...</p>
               ) : filteredData.length === 0 ? (
                 <p>No matching data found</p>
               ) : (
                 <div>
-                  {filteredData
-                    .slice(startIndex, startIndex + itemsPerPage)
-                    .map((item, index) => (
-                      <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px' }}>
-                        <CollapsibleClass classData={item} onAddClass={handleAddClass} />
-                      </div>
-                    ))}
+                  {filteredData.map((item, index) => (
+                    <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '0px' }}>
+                      {/* Adjust the minWidth value based on your preference */}
+                      <CollapsibleClass classData={item} onAddClass={handleAddClass} />
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Finalized Courses Card */}
-        <div style={{ flex: '0 0 27.5%', marginBottom: '20px' }}>
-          <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4' }}>
-            <h5 className="card-title">Finalized Courses</h5>
-            <FinalizedCourses finalizedCourses={selectedClasses} onRemove={handleRemoveClass} />
-            <button className="btn btn-primary m-2" onClick={handleFinalizeSchedule}>
-              Add Courses
-            </button>
-          </div>
-        </div>
+        {/* Class Cart */}
+        <ClassCart
+          classesInCart={classesInCart} // Pass the classesInCart state to ClassCart
+          onRemoveClass={handleRemoveClass}
+          onAddCourses={handleAddCourses}
+        />
       </div>
     </div>
   );
