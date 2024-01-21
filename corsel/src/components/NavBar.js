@@ -19,20 +19,25 @@ export default function NavBar() {
   return (
     <>
       <nav className="nav">
-        <Link to="/LandingPage">
-          <img src="edviselogo.jpeg" alt="Logo" height={75} width={75} />
-        </Link>
-        <Link to="/LandingPage" className="site-title">
-          EDVISE
-        </Link>
+        <div className="logo-container">
+          <Link to="/LandingPage">
+            <img src="edviselogo.jpeg" alt="Logo" height={75} width={75} />
+          </Link>
+          <Link to="/LandingPage" className="site-title">
+            EDVISE
+          </Link>
+        </div>
         <ul>
           <CustomLink to="/ClassSearch">Courses</CustomLink>
           <CustomLink to="/Credits">Schedule</CustomLink>
           <CustomLink to="/Forms">Counseling Forms</CustomLink>
+          {/* Add Logout button */}
+          <li>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
+          </li>
         </ul>
-        <button onClick={handleLogout} className="logout-button">
-          Logout
-        </button>
       </nav>
     </>
   );

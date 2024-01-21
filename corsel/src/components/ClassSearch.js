@@ -111,7 +111,6 @@ const ClassSearch = () => {
 
   return (
     <div>
-    <div>
       <NavBar />
       <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {/* Filters Card */}
@@ -196,9 +195,6 @@ const ClassSearch = () => {
       </div>
     </div>
   );
-};
-
-export default ClassSearch;
 };
 
 export default ClassSearch;

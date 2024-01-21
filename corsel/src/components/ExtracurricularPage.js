@@ -91,7 +91,7 @@ const ExtracurricularPage = () => {
       </div>
 
       {/* Extracurricular Content */}
-      <div style={{ flex: '2' }}>
+      <div style={{ flex: '2', maxHeight: '500px', overflowY: 'auto' }}>
         <NavBar />
 
         {loading ? (
@@ -100,13 +100,16 @@ const ExtracurricularPage = () => {
           <div>
             {Object.entries(filteredActivities).map(([activityName, activity]) => (
               <div key={activityName} style={{ border: '1px solid #ccc', padding: '20px', marginBottom: '20px', borderRadius: '10px', boxShadow: '0px 0px 8px #999', backgroundColor: '#f4f4f4' }}>
-                <h3>{activity.ActivityName}</h3>
-                <p>{activity.ActivityDescription}</p>
-                {activity.ActivityAdvisor && <p>Advisor: {activity.ActivityAdvisor}</p>}
-                {activity.ActivityType && <p>Type: {activity.ActivityType}</p>}
-                {activity.Fee && <p>Fee: {activity.Fee}</p>}
-                {activity.StudentContact && <p>Contact: {activity.StudentContact}</p>}
-                {activity.MeetingTime && <p>Meeting Details: {activity.MeetingTime}</p>}
+                <div style={{ border: '2px solid #007BFF', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
+                  {/* Club Content */}
+                  <h3>{activity.ActivityName}</h3>
+                  <p>{activity.ActivityDescription}</p>
+                  {activity.ActivityAdvisor && <p>Advisor: {activity.ActivityAdvisor}</p>}
+                  {activity.ActivityType && <p>Type: {activity.ActivityType}</p>}
+                  {activity.Fee && <p>Fee: {activity.Fee}</p>}
+                  {activity.StudentContact && <p>Contact: {activity.StudentContact}</p>}
+                  {activity.MeetingTime && <p>Meeting Details: {activity.MeetingTime}</p>}
+                </div>
               </div>
             ))}
           </div>

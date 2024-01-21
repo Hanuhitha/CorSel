@@ -1,4 +1,3 @@
-// AddVolunteerOpportunityForm.js
 import React, { useState } from 'react';
 
 const AddVolunteerOpportunityForm = () => {
@@ -67,8 +66,8 @@ const AddVolunteerOpportunityForm = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Add New Volunteer Opportunity</h2>
+    <div style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }} className="form-container">
+      <h2 style={{ textAlign: 'center' }}>Add New Volunteer Opportunity</h2>
       {submissionStatus === 'success' && <p className="success-message">Volunteer opportunity added successfully!</p>}
       {submissionStatus === 'error' && <p className="error-message">Error adding volunteer opportunity. Please try again.</p>}
       <form onSubmit={handleSubmit} className="volunteer-opportunity-form">
@@ -80,17 +79,19 @@ const AddVolunteerOpportunityForm = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
         <div>
           <label htmlFor="description">Description:</label>
-          <textarea
+          <input
             id="description"
             name="description"
             value={formData.description}
             onChange={handleInputChange}
-          ></textarea>
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
+          />
         </div>
 
         <div>
@@ -101,6 +102,7 @@ const AddVolunteerOpportunityForm = () => {
             name="organization"
             value={formData.organization}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
@@ -112,6 +114,7 @@ const AddVolunteerOpportunityForm = () => {
             name="location"
             value={formData.location}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
@@ -123,6 +126,7 @@ const AddVolunteerOpportunityForm = () => {
             name="dateAndTime"
             value={formData.dateAndTime}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
@@ -134,6 +138,7 @@ const AddVolunteerOpportunityForm = () => {
             name="duration"
             value={formData.duration}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
@@ -145,6 +150,7 @@ const AddVolunteerOpportunityForm = () => {
             name="skillsRequired"
             value={formData.skillsRequired}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
@@ -156,12 +162,15 @@ const AddVolunteerOpportunityForm = () => {
             name="contactInformation"
             value={formData.contactInformation}
             onChange={handleInputChange}
+            style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
 
-        <button type="submit" className="button">
-          Add Volunteer Opportunity
-        </button>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button type="submit" className="button" style={{ backgroundColor: '#235dfc', color: 'white', padding: '8px 16px', borderRadius: '5px', outline: 'none' }}>
+            Add Volunteer Opportunity
+          </button>
+        </div>
       </form>
     </div>
   );

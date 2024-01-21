@@ -78,8 +78,8 @@ const AddClassForm = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Add New Class</h2>
+    <div style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'}} className="form-container">
+      <h2 style={{ textAlign: 'center' }}>Add New Class</h2>
       {submissionStatus === 'success' && <p className="success-message">Class added successfully!</p>}
       {submissionStatus === 'error' && <p className="error-message">Error adding class. Please try again.</p>}
       <form onSubmit={handleSubmit} className="class-form">
@@ -91,6 +91,7 @@ const AddClassForm = () => {
           name="courseInfo_courseNumber"
           value={formData.courseInfo_courseNumber}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -102,6 +103,7 @@ const AddClassForm = () => {
           name="credits"
           value={formData.credits}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -113,6 +115,7 @@ const AddClassForm = () => {
           name="courseInfo_courseName"
           value={formData.courseInfo_courseName}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -124,6 +127,7 @@ const AddClassForm = () => {
           name="sch_name"
           value={formData.sch_name}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -135,6 +139,7 @@ const AddClassForm = () => {
           name="sectionInfo_sectionNumber"
           value={formData.sectionInfo_sectionNumber}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -146,6 +151,7 @@ const AddClassForm = () => {
           name="sectionInfo_teacherDisplay"
           value={formData.sectionInfo_teacherDisplay}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -157,6 +163,7 @@ const AddClassForm = () => {
           name="cal_name"
           value={formData.cal_name}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -168,6 +175,7 @@ const AddClassForm = () => {
           name="courseYear"
           value={formData.courseYear}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -179,6 +187,7 @@ const AddClassForm = () => {
           name="courseDif"
           value={formData.courseDif}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -190,6 +199,7 @@ const AddClassForm = () => {
           name="courseCat"
           value={formData.courseCat}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -201,6 +211,7 @@ const AddClassForm = () => {
           name="ID"
           value={formData.ID}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
@@ -212,12 +223,15 @@ const AddClassForm = () => {
           name="max_capacity"
           value={formData.max_capacity}
           onChange={handleInputChange}
+          style={{ width: '50%', padding: '2px', boxSizing: 'border-box', marginBottom: '2px', border: '1px solid #ddd', borderRadius: '5px' }}
         />
       </div>
 
-        <button type="submit" className="button">
-          Add Class
-        </button>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button type="submit" className="button" style={{ backgroundColor: '#235dfc', color: 'white', padding: '8px 16px', borderRadius: '5px', outline: 'none' }}>
+            Add Class
+          </button>
+        </div>
       </form>
     </div>
   );

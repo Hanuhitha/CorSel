@@ -1,4 +1,5 @@
 import React from 'react';
+import './MyCommitmentsPage.css'; // Make sure to include your CSS file
 
 const MyCommitmentsPage = () => {
   // Sample data (replace this with your actual data)
@@ -13,11 +14,11 @@ const MyCommitmentsPage = () => {
   const pastCommitments = commitments.filter((commitment) => commitment.status === 'past');
 
   return (
-    <div>
+    <div className="commitments-container">
       <h2>My Commitments</h2>
 
       {/* Upcoming Commitments */}
-      <div>
+      <div className="commitments-column">
         <h3>Upcoming Commitments</h3>
         {upcomingCommitments.length > 0 ? (
           <ul>
@@ -33,7 +34,7 @@ const MyCommitmentsPage = () => {
       </div>
 
       {/* Past Commitments */}
-      <div>
+      <div className="commitments-column">
         <h3>Past Commitments</h3>
         {pastCommitments.length > 0 ? (
           <ul>
