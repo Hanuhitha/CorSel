@@ -1,5 +1,6 @@
 import React from 'react';
 import './MyCommitmentsPage.css'; // Make sure to include your CSS file
+import NavBar from './NavBar'; // Import NavBar component
 
 const MyCommitmentsPage = () => {
   // Sample data (replace this with your actual data)
@@ -14,39 +15,44 @@ const MyCommitmentsPage = () => {
   const pastCommitments = commitments.filter((commitment) => commitment.status === 'past');
 
   return (
-    <div className="commitments-container">
-      <h2>My Commitments</h2>
+    <div>
+      <NavBar />
+      <div className="content-container">
+        <div className="my-commitments-container">
+          <h2>My Commitments</h2>
 
-      {/* Upcoming Commitments */}
-      <div className="commitments-column">
-        <h3>Upcoming Commitments</h3>
-        {upcomingCommitments.length > 0 ? (
-          <ul>
-            {upcomingCommitments.map((commitment) => (
-              <li key={commitment.id}>
-                {commitment.title} - {commitment.date} (Upcoming)
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No upcoming commitments.</p>
-        )}
-      </div>
+          {/* Upcoming Commitments */}
+          <div className="commitments-column">
+            <h3>Upcoming Commitments</h3>
+            {upcomingCommitments.length > 0 ? (
+              <ul>
+                {upcomingCommitments.map((commitment) => (
+                  <li key={commitment.id}>
+                    {commitment.title} - {commitment.date} (Upcoming)
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No upcoming commitments.</p>
+            )}
+          </div>
 
-      {/* Past Commitments */}
-      <div className="commitments-column">
-        <h3>Past Commitments</h3>
-        {pastCommitments.length > 0 ? (
-          <ul>
-            {pastCommitments.map((commitment) => (
-              <li key={commitment.id}>
-                {commitment.title} - {commitment.date} (Past)
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No past commitments.</p>
-        )}
+          {/* Past Commitments */}
+          <div className="commitments-column">
+            <h3>Past Commitments</h3>
+            {pastCommitments.length > 0 ? (
+              <ul>
+                {pastCommitments.map((commitment) => (
+                  <li key={commitment.id}>
+                    {commitment.title} - {commitment.date} (Past)
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No past commitments.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

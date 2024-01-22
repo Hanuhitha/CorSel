@@ -18,6 +18,7 @@ import VolunteerStatsPage from './VolunteerStatsPage';
 import OpportunitiesPage from './OpportunitiesPage';
 import ExtracurricularPage from './ExtracurricularPage';
 import StaffAdditionPage from './StaffAdditionPage';
+import YearDetailsPage from './YearDetailsPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/find-opportunities" element={<OpportunitiesPage />} />
                 <Route path="/Extracurricular" element={<ExtracurricularPage />} />
                 <Route path="/addOpportunity" element={<StaffAdditionPage />} />
+                <Route path="/Credits/:yearNumber" element={<YearDetailsPage />} />
               </Routes>
             </div>
           </Router>

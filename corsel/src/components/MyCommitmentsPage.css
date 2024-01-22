@@ -1,0 +1,44 @@
+/* MyCommitmentsPage.css */
+
+.commitments-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.commitments-column {
+  flex: 1;
+  margin: 0 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+}
+
+.commitments-column h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.commitments-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.commitments-column li {
+  margin-bottom: 0.5rem;
+}
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.my-commitments-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Additional styling based on your preferences */

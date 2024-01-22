@@ -1,15 +1,17 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
 import FinalizedCourses from './FinalizedCourses';
 import CreditBreakdown from './CreditBreakdown';
+import YearDetailsPage from './YearDetailsPage';
 
 const Credits = () => {
   const [finalizedCourses, setFinalizedCourses] = useState(
     JSON.parse(localStorage.getItem('selectedClasses')) || []
   );
+  const [selectedYear, setSelectedYear] = useState(null);
   const captureRef = useRef(null);
 
   const handleRemove = (removedCourse) => {
@@ -24,7 +26,7 @@ const Credits = () => {
   const organizeCoursesByYear = () => {
     const coursesByYear = {};
 
-    finalizedCourses.forEach(course => {
+    finalizedCourses.forEach((course) => {
       const year = course.courseYear || 'Uncategorized';
 
       if (coursesByYear[year]) {
@@ -38,12 +40,6 @@ const Credits = () => {
   };
 
   const coursesByYear = organizeCoursesByYear();
-  const yearMappings = {
-    1: 'Freshman',
-    2: 'Sophomore',
-    3: 'Junior',
-    4: 'Senior',
-  };
 
   const handleCaptureSnapshot = () => {
     if (captureRef.current) {
@@ -57,6 +53,11 @@ const Credits = () => {
         pdf.save('snapshot.pdf');
       });
     }
+  };
+
+  const getYearClassName = (yearNumber) => {
+    const yearNames = ['Freshman Year', 'Sophomore Year', 'Junior Year', 'Senior Year'];
+    return yearNames[yearNumber - 1] || `Year ${yearNumber}`;
   };
 
   return (
@@ -82,15 +83,23 @@ const Credits = () => {
                 padding: '1rem',
                 width: '265px',
               }}
+              onClick={() => setSelectedYear(yearNumber)} // Update the onClick handler
             >
               <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
-                {`${yearMappings[yearNumber]} Year`}
+                {getYearClassName(yearNumber)}
               </h3>
+              {selectedYear === yearNumber && (
+                <YearDetailsPage year={yearNumber} courses={coursesByYear[yearNumber]} />
+              )}
               <FinalizedCourses
                 finalizedCourses={coursesByYear[yearNumber]}
                 onRemove={handleRemove}
               />
-              {/* Add other content related to courses if needed */}
+              <div style={{ marginTop: 'auto', textAlign: 'center' }}>
+                <Link to={`/Credits/${yearNumber}`} style={{ textDecoration: 'none' }}>
+                  <button className="btn btn-primary">More Details</button>
+                </Link>
+              </div>
             </div>
           ))}
           <div
