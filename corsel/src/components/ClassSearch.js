@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import NavBar from './NavBar';
 import CollapsibleClass from './CollapsibleClass';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +26,7 @@ const ClassSearch = () => {
   const [subjectFilter, setSubjectFilter] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
   const [loading, setLoading] = useState(true);
-  
+
   const handleResetFilters = () => {
     setSubjectFilter('');
     setDifficultyFilter('');
@@ -37,6 +38,44 @@ const ClassSearch = () => {
 
   // Use useHistory for navigation
   const history = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedYear, setSelectedYear] = useState('');
+  const [highSchoolYears, setHighSchoolYears] = useState([]);
+
+  useEffect(() => {
+    const fetchHighSchoolYears = async () => {
+      try {
+        const fetchedData = await fetchDataFromBackend();
+        if (typeof fetchedData === 'object') {
+          const coursesArray = Object.values(fetchedData);
+          const allYears = coursesArray.flatMap(item => {
+            console.log('item.courseYear:', item.courseYear);
+            // Check if item.courseYear is a string before attempting to split
+            return typeof item.courseYear === 'string'
+              ? item.courseYear.split(',').map(Number)
+              : typeof item.courseYear === 'number'
+              ? [item.courseYear]  // If it's a single year as a number
+              : [];
+          });
+          console.log('allYears:', allYears);
+          const uniqueYears = Array.from(new Set(allYears));
+          console.log('uniqueYears:', uniqueYears);
+          setHighSchoolYears(uniqueYears);
+        } else {
+          console.error('Invalid data structure received from the backend:', fetchedData);
+        }
+      } catch (error) {
+        console.error('Error fetching high school years:', error);
+      }
+    };
+
+    fetchHighSchoolYears();
+  }, []);
+
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,9 +122,23 @@ const ClassSearch = () => {
   const subjects = ['Math', 'English', 'Social Studies', 'Science', 'Foreign Language', 'Art', 'MISC'];
   const difficulties = ['REG', 'HON', 'AP'];
 
+  const [duplicateClassMessage, setDuplicateClassMessage] = useState('');
+
   const handleAddClass = (classData) => {
-    // Add the class to the Class Cart state
-    setClassesInCart((prevClasses) => [...prevClasses, classData]);
+    // Check if the course number is already in selectedClasses or classesInCart
+    const isClassAlreadyAdded = selectedClasses.some(selected => selected.courseInfo_courseNumber === classData.courseInfo_courseNumber) ||
+                                classesInCart.some(cartItem => cartItem.courseInfo_courseNumber === classData.courseInfo_courseNumber);
+
+    // If the class is not already added, proceed to add it
+    if (!isClassAlreadyAdded) {
+      // Add the class to the Class Cart state
+      setClassesInCart((prevClasses) => [...prevClasses, classData]);
+      // Clear any existing duplicate class message
+      setDuplicateClassMessage('');
+    } else {
+      // Set a message to inform the user that the class is already added
+      setDuplicateClassMessage(`Class with course number ${classData.courseInfo_courseNumber} is already in your cart or schedule.`);
+    }
   };
 
   const handleRemoveClass = (classToRemove) => {
@@ -94,32 +147,66 @@ const ClassSearch = () => {
     setClassesInCart(updatedClassesInCart);
   };
 
-
-  const handleAddCourses = () => {
-    // Add logic to send selected classes to the backend or perform any other action
-
-    // Move classes from Class Cart to selectedClasses
-    const updatedSelectedClasses = [...selectedClasses, ...classesInCart];
-    setSelectedClasses(updatedSelectedClasses);
-
-    // Clear the Class Cart state
-    setClassesInCart([]);
-
-    // Update localStorage
-    localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
-
-    // Redirect to the Credits page after adding courses
-    history('/Credits');
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
+  const handleYearSelection = () => {
+    handleCloseModal();
+    // If a year is selected, add the class to the Class Cart
+    handleAddCourses();
+  };
+
+  const handleAddCourses = () => {
+    // Check if classesInCart is not empty
+    if (classesInCart.length > 0) {
+      // Iterate over classes in the cart
+      classesInCart.forEach((classData) => {
+        // Check if the course can be taken in multiple years
+        if (classData.courseYear && classData.courseYear.includes(',')) {
+          // Prompt user to choose the year
+          const selectedYear = prompt(`Choose the year for ${classData.courseInfo_courseName}: ${classData.courseYear}`);
+
+          // If the user cancels, skip this class
+          if (selectedYear === null) {
+            return;
+          }
+
+          // Add the class to the Class Cart with the selected year
+          setClassesInCart((prevClasses) => [
+            ...prevClasses,
+            { ...classData, selectedYear },
+          ]);
+        } else {
+          // If the class can only be taken in one year, add it directly
+          setClassesInCart((prevClasses) => [...prevClasses, classData]);
+        }
+      });
+      // Move classes from Class Cart to selectedClasses
+      const updatedSelectedClasses = [...selectedClasses, ...classesInCart];
+      setSelectedClasses(updatedSelectedClasses);
+
+      // Clear the Class Cart state
+      setClassesInCart([]);
+
+      // Update localStorage
+      localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
+
+      // Redirect to the Credits page after adding courses
+      history('/Credits');
+    }
+  };
   return (
-    <div>
+    <div style={{ position: 'relative', minHeight: '600px' }}>
       <NavBar />
-      <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', height: '100%' }}>
         {/* Filters Card */}
-        <div style={{ flex: '0 0 20%', marginBottom: '20px' }}>
-          <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4' }}>
+        <div style={{ flex: '0 0 20%', marginBottom: '20px', height: '100%' }}>
+          <div className="card" style={{ height: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', overflow: 'hidden' }}>
             <h5 className="card-title">Filters</h5>
             <div>
               <label htmlFor="searchQuery">Search:</label>
@@ -169,9 +256,8 @@ const ClassSearch = () => {
         </div>
 
         {/* Courses Card (Wider) */}
-        <div style={{ flex: '0 0 50%', maxWidth: '47%', marginBottom: '20px' }}>
-          <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
-            {/* Set a min-height value based on your design preferences */}
+        <div style={{ flex: '0 0 50%', maxWidth: '47%', marginBottom: '20px', height: '100%' }}>
+          <div className="card" style={{ width: '100%', height: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px', overflow: 'hidden' }}>
             <h5 className="card-title">Courses</h5>
             <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }}>
               {loading ? (
@@ -196,8 +282,34 @@ const ClassSearch = () => {
         <ClassCart
           classesInCart={classesInCart}
           onRemoveClass={handleRemoveClass}
-          onAddCourses={handleAddCourses}
+          onAddCourses={handleOpenModal} // Open the modal when "Add Courses" is pressed
+          style={{ flex: '0 0 30%', maxWidth: '30%' }} // Adjust the width based on your preference
         />
+        {/* Display the duplicate class message */}
+        {duplicateClassMessage && <p style={{ color: 'red' }}>{duplicateClassMessage}</p>}
+
+        {/* Add a modal for year selection */}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={handleCloseModal}
+          contentLabel="Select High School Year"
+        >
+          <h2>Select High School Year</h2>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            className="form-control mb-2"
+          >
+            {/* Populate options based on high school years from the database */}
+            <option value="">Select Year</option>
+            {highSchoolYears.map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleYearSelection}>Add Course</button>
+        </Modal>
       </div>
     </div>
   );

@@ -14,8 +14,8 @@ const FinalizedCourse = ({ course, onRemove }) => {
       onMouseEnter={() => handleCardHover(true)}
       onMouseLeave={() => handleCardHover(false)}
     >
+      {/* Course details */}
       <p>Course Name: {course.courseInfo_courseName}</p>
-      {/* Show additional details always, but style based on card expansion */}
       <div className={isCardExpanded ? 'expanded-details' : 'collapsed-details'}>
         <p>Teacher: {course.sectionInfo_teacherDisplay}</p>
         <p>Credits: {course.Credits}</p>

@@ -1,3 +1,4 @@
+// Credits.js
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -5,7 +6,6 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import FinalizedCourses from './FinalizedCourses';
 import CreditBreakdown from './CreditBreakdown';
-import YearDetailsPage from './YearDetailsPage';
 
 const Credits = () => {
   const [finalizedCourses, setFinalizedCourses] = useState(
@@ -83,23 +83,22 @@ const Credits = () => {
                 padding: '1rem',
                 width: '265px',
               }}
-              onClick={() => setSelectedYear(yearNumber)} // Update the onClick handler
+              onClick={() => setSelectedYear(yearNumber)}
             >
               <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
                 {getYearClassName(yearNumber)}
               </h3>
-              {selectedYear === yearNumber && (
-                <YearDetailsPage year={yearNumber} courses={coursesByYear[yearNumber]} />
-              )}
               <FinalizedCourses
                 finalizedCourses={coursesByYear[yearNumber]}
                 onRemove={handleRemove}
               />
-              <div style={{ marginTop: 'auto', textAlign: 'center' }}>
-                <Link to={`/Credits/${yearNumber}`} style={{ textDecoration: 'none' }}>
+              {coursesByYear[yearNumber] && coursesByYear[yearNumber].length > 0 && (
+                <div style={{ marginTop: 'auto', textAlign: 'center' }}>
+                <Link to={`/Credits/${yearNumber}`} state={{ year: yearNumber, courses: coursesByYear[yearNumber] }} style={{ textDecoration: 'none' }}>
                   <button className="btn btn-primary">More Details</button>
                 </Link>
-              </div>
+                </div>
+              )}
             </div>
           ))}
           <div
