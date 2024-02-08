@@ -82,10 +82,23 @@ const ClassSearch = () => {
 
   const subjects = ['Math', 'English', 'Social Studies', 'Science', 'Foreign Language', 'Art', 'MISC'];
   const difficulties = ['REG', 'HON', 'AP'];
+  const [duplicateClassMessage, setDuplicateClassMessage] = useState('');
 
   const handleAddClass = (classData) => {
-    // Add the class to the Class Cart state
-    setClassesInCart((prevClasses) => [...prevClasses, classData]);
+    // Check if the course number is already in selectedClasses or classesInCart
+    const isClassAlreadyAdded = selectedClasses.some(selected => selected.courseInfo_courseNumber === classData.courseInfo_courseNumber) ||
+                                classesInCart.some(cartItem => cartItem.courseInfo_courseNumber === classData.courseInfo_courseNumber);
+
+    // If the class is not already added, proceed to add it
+    if (!isClassAlreadyAdded) {
+      // Add the class to the Class Cart state
+      setClassesInCart((prevClasses) => [...prevClasses, classData]);
+      // Clear any existing duplicate class message
+      setDuplicateClassMessage('');
+    } else {
+      // Set a message to inform the user that the class is already added
+      setDuplicateClassMessage(`Class with course number ${classData.courseInfo_courseNumber} is already in your cart or schedule.`);
+    }
   };
 
   const handleRemoveClass = (classToRemove) => {
@@ -199,6 +212,7 @@ const ClassSearch = () => {
           onAddCourses={handleAddCourses}
         />
       </div>
+      {duplicateClassMessage && <p style={{ color: 'red' }}>{duplicateClassMessage}</p>}
     </div>
   );
 };
