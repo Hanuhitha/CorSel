@@ -19,6 +19,8 @@ import OpportunitiesPage from './OpportunitiesPage';
 import ExtracurricularPage from './ExtracurricularPage';
 import StaffAdditionPage from './StaffAdditionPage';
 import YearDetailsPage from './YearDetailsPage';
+import CourseRecommendationPage from './CourseRecommendation';
+
 
 function App() {
   return (
@@ -29,7 +31,8 @@ function App() {
             <div>
               <Routes>
                 <Route path="/" element={<RoleSelection />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup/student" element={<Signup />} />
+                <Route path="/signup/staff" element={<Signup />} />
                 <Route path="/Home" element={<Home />} />
                 <Route path="/LandingPage" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
@@ -43,6 +46,7 @@ function App() {
                 <Route path="/Extracurricular" element={<ExtracurricularPage />} />
                 <Route path="/addOpportunity" element={<StaffAdditionPage />} />
                 <Route path="/Credits/:yearNumber" element={<YearDetailsPage />} />
+                <Route path="/CourseRecommendations" element={<CourseRecommendationPage />} />
               </Routes>
             </div>
           </Router>

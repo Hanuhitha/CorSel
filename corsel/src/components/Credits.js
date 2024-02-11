@@ -1,26 +1,97 @@
-// Credits.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import FinalizedCourses from './FinalizedCourses';
 import CreditBreakdown from './CreditBreakdown';
+import { db, auth } from './firebase';
+import { useClassContext } from './ClassContext';
 
 const Credits = () => {
-  const [finalizedCourses, setFinalizedCourses] = useState(
+
+  const [, setFinalizedCourses] = useState(
     JSON.parse(localStorage.getItem('selectedClasses')) || []
   );
-  const [selectedYear, setSelectedYear] = useState(null);
+
+  const [currentUser, setCurrentUser] = useState(null); // Define currentUser state
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    // Cleanup the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  const [finalizedCourses] = useState(
+    JSON.parse(localStorage.getItem('selectedClasses')) || []
+  );
+  const [, setSelectedYear] = useState(null);
   const captureRef = useRef(null);
 
-  const handleRemove = (removedCourse) => {
+  const { classesInCart, setClassesInCart } = useClassContext();
+
+  const removeFromClassSchedule = async (userId, selectedClass) => {
+    try {
+      const userDocRef = db.collection('users').doc(userId);
+  
+      await db.runTransaction(async (transaction) => {
+        try {
+          const doc = await transaction.get(userDocRef);
+          const currentSchedule = doc.data().finalizedSchedule || [];
+  
+          const removedCourseNumber = selectedClass?.courseInfo_courseNumber;
+  
+          if (typeof removedCourseNumber === 'number' || !isNaN(removedCourseNumber)) {
+            const updatedSchedule = currentSchedule.filter(courseNumber => courseNumber !== removedCourseNumber);
+  
+            transaction.update(userDocRef, { finalizedSchedule: updatedSchedule });
+          } else {
+            console.error('Error: courseInfo_courseNumber is not a number.');
+            // Optionally handle this case further based on your needs
+          }
+        } catch (error) {
+          console.error('Error within transaction:', error);
+          throw error; // Rethrow the error to stop the transaction
+        }
+      });
+  
+      const updatedSchedule = await db.collection('users').doc(userId).get().then((doc) => doc.data().finalizedSchedule || []);
+      console.log('Finalized Schedule after removal:', updatedSchedule);
+  
+      return updatedSchedule;
+    } catch (error) {
+      console.error('Error removing class from schedule:', error);
+      return [];
+    }
+  };  
+
+  const handleRemove = async (classToRemove, removedCourse) => {
+
     const updatedCourses = finalizedCourses.filter(
       (course) => course.courseInfo_courseName !== removedCourse.courseInfo_courseName
     );
 
     setFinalizedCourses(updatedCourses);
     localStorage.setItem('selectedClasses', JSON.stringify(updatedCourses));
+
+    try { 
+      // Check if currentUser is defined and has the uid property
+      if (currentUser && currentUser.uid) {
+        // Remove the class from the database
+        const updatedSchedule = await removeFromClassSchedule(currentUser.uid, classToRemove);
+
+      } else {
+        // Handle case where currentUser or currentUser.uid is not defined
+        console.error('Error: currentUser or currentUser.uid is not defined');
+        // Optionally, you might want to handle this case, e.g., redirect to login
+      }
+    } catch (error) {
+      console.error('Error handling removal:', error);
+      // Handle any error that might occur during the removal process
+    }
   };
 
   const organizeCoursesByYear = () => {

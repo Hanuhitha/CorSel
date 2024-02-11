@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const RoleSelection = () => {
+  const [setSelectedRole] = useState('');
+
+  const handleRoleSelection = (role) => {
+    setSelectedRole(role);
+  };
+
   return (
     <>
-      <h2 className="text-center mb-4">Login As</h2>
       <div className="text-center">
-        <Link to="/signup/student" className="btn btn-primary m-2">
+        <Link to="/signup/student" className="btn btn-primary m-2" onClick={() => handleRoleSelection('student')}>
           Student/Parent
         </Link>
-        <Link to="/signup/staff" className="btn btn-primary m-2">
+        <Link to="/signup/staff" className="btn btn-primary m-2" onClick={() => handleRoleSelection('staff')}>
           Staff
         </Link>
       </div>

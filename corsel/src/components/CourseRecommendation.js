@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import { useAuth } from '../contexts/AuthContext';
-import { getCourseRecommendations } from './api'; // Replace with your actual API call or recommendation logic
 
 const CourseRecommendations = () => {
   const { currentUser } = useAuth();
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
-    // Fetch course recommendations based on user's finalized courses
+    // Fetch course recommendations from the backend API
     if (currentUser) {
-      const userId = currentUser.id; // Replace with your actual user ID retrieval logic
-      getCourseRecommendations(userId)
+      // Assuming your backend API endpoint is /api/recommendations and it requires authentication
+      fetch('/api/recommendations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include any necessary authentication headers
+        },
+        body: JSON.stringify({ studentId: currentUser.id }), // Send the current user's ID to the backend
+      })
+        .then((response) => response.json())
         .then((data) => setRecommendations(data))
         .catch((error) => console.error('Error fetching recommendations:', error));
     }

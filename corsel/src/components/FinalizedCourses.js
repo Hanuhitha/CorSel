@@ -24,7 +24,10 @@ const FinalizedCourse = ({ course, onRemove }) => {
 
       {/* Remove button */}
       {isCardExpanded && (
-        <button className="btn btn-danger m-2" onClick={() => onRemove(course)}>
+        <button className="btn btn-danger m-2" onClick={() => {
+          console.log('Removing course:', course);  // Add this line for debugging
+          onRemove(course);
+        }}>
           Remove from Schedule
         </button>
       )}
