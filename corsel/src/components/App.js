@@ -20,6 +20,7 @@ import ExtracurricularPage from './ExtracurricularPage';
 import StaffAdditionPage from './StaffAdditionPage';
 import YearDetailsPage from './YearDetailsPage';
 import CourseRecommendationPage from './CourseRecommendations';
+import SemesterCard from './SemesterCard'
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
                 <Route path="/addOpportunity" element={<StaffAdditionPage />} />
                 <Route path="/Credits/:yearNumber" element={<YearDetailsPage />} />
                 <Route path="/CourseRecommendations" element={<CourseRecommendationPage />} />
+                <Route path="/SemesterCard" element={<SemesterCard />} />
+           
               </Routes>
             </div>
           </Router>

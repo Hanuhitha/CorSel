@@ -21,6 +21,7 @@ export default function NavBar() {
     { to: '/Extracurricular', label: 'Extracurricular' },
     { to: '/VolunteerValidationPage', label: 'Volunteer Hours' },
     { to: '/addOpportunity', label: 'Add Opportunity' },
+    {to: '/SemesterCard', label: 'Semester View'}
   ];
 
   return (
