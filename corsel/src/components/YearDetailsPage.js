@@ -62,15 +62,14 @@ const YearDetailsPage = () => {
   return (
     <div>
       <NavBar />
-      <div style={{ marginTop: '2cm', display: 'flex'}}>
-        <div style={{ flex: 1, padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', borderRadius: '10px', borderRadius: '10px',
-          border: '1px solid #ccc' }}>
-          <h4 style={{ fontSize: '1.65em', textAlign: 'center', margin: '10px 0 30px 0' }}>Details for {`Year ${year}`}</h4>
+      <div style={{ marginTop: '2cm', display: 'flex' }}>
+        <div style={{ flex: 1, padding: '10px' }}>
+          <h4>Details for {`Year ${year}`}</h4>
           {allCourses && allCourses.length > 0 ? (
             <div>
-              <div style={{ display: 'flex' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ flex: 1 }}>
-                  <h5>Core Courses:</h5>
+                  <h5>Core Classes:</h5>
                   <ul style={{ listStyle: 'none', padding: '0' }}>
                     {coreClasses.map((course, index) => (
                       <li
@@ -95,8 +94,8 @@ const YearDetailsPage = () => {
                     ))}
                   </ul>
                 </div>
-  
-                <div style={{ flex: 1, marginLeft: '10px', marginRight: '10px' }}>
+
+                <div style={{ flex: 1, marginLeft: '10px' }}>
                   <h5>Elective Courses:</h5>
                   <ul style={{ listStyle: 'none', padding: '0' }}>
                     {electiveCourses.map((course, index) => (
@@ -122,44 +121,42 @@ const YearDetailsPage = () => {
                     ))}
                   </ul>
                 </div>
-                
-                <div>
-                  <h5 style={{ flex: 1 }}>Missing Courses:</h5>
-                  <ul style={{ listStyle: 'none', padding: '0' }}>
-                    {requiredCourses.length === 0 ? (
-                      <p style={{ margin: '0' }}>All required courses are completed!</p>
-                    ) : (
-                      requiredCourses.map((course, index) => (
-                        <li
-                          key={index}
-                          style={{
-                            border: '1px solid #ccc',
-                            padding: '10px',
-                            marginBottom: '10px',
-                            backgroundColor: '#ff7f7f',
-                            borderRadius: '10px',
-                          }}
-                        >
-                          {course}
-                        </li>
-                      ))
-                    )}
-                  </ul>
-                </div>
               </div>
+
+              <h5 style={{ marginTop: '20px' }}>Missing Courses:</h5>
+              <ul style={{ listStyle: 'none', padding: '0' }}>
+                {requiredCourses.length === 0 ? (
+                  <p style={{ margin: '0' }}>All required courses are completed!</p>
+                ) : (
+                  requiredCourses.map((course, index) => (
+                    <li
+                      key={index}
+                      style={{
+                        border: '1px solid #ccc',
+                        padding: '10px',
+                        marginBottom: '10px',
+                        backgroundColor: '#b3d7ed',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      {course}
+                    </li>
+                  ))
+                )}
+              </ul>
             </div>
           ) : (
             <p>No courses available for this year.</p>
           )}
         </div>
-  
+
         <div style={{ flex: 1, padding: '10px', marginLeft: '10px' }}>
           {/* Render YearlyCreditBreakdown component for the specific year */}
           <YearlyCreditBreakdown year={year} finalizedCourses={allCourses} />
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default YearDetailsPage;

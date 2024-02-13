@@ -75,17 +75,8 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
   const totalEarnedCredits = Object.values(creditBreakdown).reduce((acc, { earned }) => acc + earned, 0);
   // asdfh
   return (
-    <div style={{
-      padding: '20px',
-      width: '500px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      backgroundColor: '#f4f4f4',
-      borderRadius: '10px',
-      border: '1px solid #ccc',
-      marginTop: '-10px', // Add margin top
-      marginBottom: '0px', // Add margin bottom
-    }}>
-      <h3 style={{ fontSize: '1.65em', textAlign: 'center', margin: '10px 0 30px 0' }}>{`Credit Breakdown`}</h3>
+    <div>
+      <h3>{`Credit Breakdown`}</h3>
       {Object.entries(creditBreakdown).map(([category, { earned, required }]) => (
         <div
           key={category}
