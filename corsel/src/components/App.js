@@ -21,6 +21,7 @@ import StaffAdditionPage from './StaffAdditionPage';
 import YearDetailsPage from './YearDetailsPage';
 import CourseRecommendationPage from './CourseRecommendations';
 import SemesterCard from './SemesterCard'
+import Survey from './Survey'
 
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
                 <Route path="/Credits/:yearNumber" element={<YearDetailsPage />} />
                 <Route path="/CourseRecommendations" element={<CourseRecommendationPage />} />
                 <Route path="/SemesterCard" element={<SemesterCard />} />
-           
+                <Route path="/Survey" element={<Survey/>} />
               </Routes>
             </div>
           </Router>
