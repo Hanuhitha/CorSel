@@ -14,13 +14,14 @@ const Credits = () => {
     JSON.parse(localStorage.getItem('selectedClasses')) || []
   );
 
-  const [currentUser, setCurrentUser] = useState(null); 
+  const [currentUser, setCurrentUser] = useState(null); // Define currentUser state
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
 
+    // Cleanup the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
 
@@ -49,10 +50,11 @@ const Credits = () => {
             transaction.update(userDocRef, { finalizedSchedule: updatedSchedule });
           } else {
             console.error('Error: courseInfo_courseNumber is not a number.');
+            // Optionally handle this case further based on your needs
           }
         } catch (error) {
           console.error('Error within transaction:', error);
-          throw error; 
+          throw error; // Rethrow the error to stop the transaction
         }
       });
   
@@ -76,39 +78,39 @@ const Credits = () => {
     localStorage.setItem('selectedClasses', JSON.stringify(updatedCourses));
 
     try { 
+      // Check if currentUser is defined and has the uid property
       if (currentUser && currentUser.uid) {
+        // Remove the class from the database
         const updatedSchedule = await removeFromClassSchedule(currentUser.uid, classToRemove);
 
       } else {
+        // Handle case where currentUser or currentUser.uid is not defined
         console.error('Error: currentUser or currentUser.uid is not defined');
+        // Optionally, you might want to handle this case, e.g., redirect to login
       }
     } catch (error) {
       console.error('Error handling removal:', error);
+      // Handle any error that might occur during the removal process
     }
   };
 
-  const organizeCoursesByYearAndSemester = () => {
-    const coursesByYearAndSemester = {};
+  const organizeCoursesByYear = () => {
+    const coursesByYear = {};
 
     finalizedCourses.forEach((course) => {
       const year = course.courseYear || 'Uncategorized';
-      const semester = course.CourseSem || 'Unknown';
 
-      if (!coursesByYearAndSemester[year]) {
-        coursesByYearAndSemester[year] = {};
+      if (coursesByYear[year]) {
+        coursesByYear[year].push(course);
+      } else {
+        coursesByYear[year] = [course];
       }
-
-      if (!coursesByYearAndSemester[year][semester]) {
-        coursesByYearAndSemester[year][semester] = [];
-      }
-
-      coursesByYearAndSemester[year][semester].push(course);
     });
 
-    return coursesByYearAndSemester;
+    return coursesByYear;
   };
 
-  const coursesByYearAndSemester = organizeCoursesByYearAndSemester();
+  const coursesByYear = organizeCoursesByYear();
 
   const handleCaptureSnapshot = () => {
     if (captureRef.current) {
@@ -134,13 +136,13 @@ const Credits = () => {
       <NavBar />
       <div ref={captureRef}>
         <div style={{ display: 'flex' }}>
-          {Object.entries(coursesByYearAndSemester).map(([year, coursesBySemester]) => (
+          {[1, 2, 3, 4].map((yearNumber, index, array) => (
             <div
-              key={year}
+              key={yearNumber}
               style={{
                 flex: 1,
-                marginRight: '10px',
-                marginLeft: '10px',
+                marginRight: index === array.length - 1 ? '10px' : '0px',
+                marginLeft: index === 0 ? '10px' : '0px',
                 borderRadius: '1rem',
                 boxShadow: '0px 0px 8px #999',
                 display: 'flex',
@@ -152,22 +154,20 @@ const Credits = () => {
                 padding: '1rem',
                 width: '265px',
               }}
-              onClick={() => setSelectedYear(year)}
+              onClick={() => setSelectedYear(yearNumber)}
             >
               <h3 style={{ fontSize: '1.5rem', margin: '0.5rem 5%', textAlign: 'center', padding: '0', color: 'inherit', textDecoration: 'none' }}>
-                {getYearClassName(year)}
+                {getYearClassName(yearNumber)}
               </h3>
-              {Object.entries(coursesBySemester).map(([semester, courses]) => (
-                <div key={semester}>
-                  <h4>{semester}</h4>
-                  <FinalizedCourses finalizedCourses={courses} onRemove={handleRemove} />
-                </div>
-              ))}
-              {coursesBySemester && Object.keys(coursesBySemester).length > 0 && (
+              <FinalizedCourses
+                finalizedCourses={coursesByYear[yearNumber]}
+                onRemove={handleRemove}
+              />
+              {coursesByYear[yearNumber] && coursesByYear[yearNumber].length > 0 && (
                 <div style={{ marginTop: 'auto', textAlign: 'center' }}>
-                  <Link to={`/Credits/${year}`} state={{ year: year, courses: coursesBySemester }} style={{ textDecoration: 'none' }}>
-                    <button className="btn btn-primary">More Details</button>
-                  </Link>
+                <Link to={`/Credits/${yearNumber}`} state={{ year: yearNumber, courses: coursesByYear[yearNumber] }} style={{ textDecoration: 'none' }}>
+                  <button className="btn btn-primary">More Details</button>
+                </Link>
                 </div>
               )}
             </div>
