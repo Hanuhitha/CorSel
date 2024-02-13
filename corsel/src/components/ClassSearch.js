@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useClassContext } from './ClassContext';
 import ClassCart from './ClassCart';
 import { db, auth } from './firebase';
-import CourseRecommendations from './CourseRecommendations';
+//import CourseRecommendations from './CourseRecommendations';
 
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
