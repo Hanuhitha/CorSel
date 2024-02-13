@@ -28,7 +28,7 @@ export default function NavBar() {
     <nav className="nav">
       <div className="logo-container">
         <Link to="/LandingPage">
-          <img src="Edvise.png" alt="Logo" height={75} width={65} />
+        <img src={`${process.env.PUBLIC_URL}/Edvise.png`} alt="Logo" height={75} width={65} />
         </Link>
         <Link to="/LandingPage" className="site-title">
           EDVISE
