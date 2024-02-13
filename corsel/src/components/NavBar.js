@@ -27,7 +27,7 @@ export default function NavBar() {
     <nav className="nav">
       <div className="logo-container">
         <Link to="/LandingPage">
-          <img src="edviselogo.jpeg" alt="Logo" height={75} width={75} />
+          <img src="Edvise.png" alt="Logo" height={75} width={65} />
         </Link>
         <Link to="/LandingPage" className="site-title">
           EDVISE
