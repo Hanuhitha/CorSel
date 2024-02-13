@@ -18,11 +18,11 @@ function Dropdown(){
         <h6>Filter by category</h6>
             <select value={selects2} onChange={e => setSelects2(e.target.value)}>
                 <option>Select Value</option>
-                <option>Math </option>
-                <option>English </option>
-                <option>Social </option>
-                <option>Science </option>
-                <option>Foriegn language</option>
+                <option>Math</option>
+                <option>English</option>
+                <option>Social Studies</option>
+                <option>Science</option>
+                <option>Foriegn Language</option>
                 <option>Art</option>
                 <option>Misc</option>
             </select>

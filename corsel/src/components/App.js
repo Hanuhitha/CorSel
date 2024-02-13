@@ -19,7 +19,7 @@ import OpportunitiesPage from './OpportunitiesPage';
 import ExtracurricularPage from './ExtracurricularPage';
 import StaffAdditionPage from './StaffAdditionPage';
 import YearDetailsPage from './YearDetailsPage';
-import CourseRecommendationPage from './CourseRecommendation';
+import CourseRecommendationPage from './CourseRecommendations';
 
 
 function App() {

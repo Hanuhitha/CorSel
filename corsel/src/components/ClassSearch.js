@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useClassContext } from './ClassContext';
 import ClassCart from './ClassCart';
 import { db, auth } from './firebase';
+import CourseRecommendations from './CourseRecommendations';
 
 const fetchDataFromBackend = async () => {
   const apiUrl = 'http://localhost:4000/data';
@@ -22,6 +23,8 @@ const fetchDataFromBackend = async () => {
 const ClassSearch = () => {
 
   const [currentUser, setCurrentUser] = useState(null); // Define currentUser state
+  const [showRecommendations, setShowRecommendations] = useState(false); // New state for displaying recommendations
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -42,6 +45,11 @@ const ClassSearch = () => {
   const handleResetFilters = () => {
     setSubjectFilter('');
     setDifficultyFilter('');
+  };
+
+  const handleShowRecommendations = () => {
+    // Set showRecommendations to true when the button is clicked
+    setShowRecommendations(true);
   };
 
   // State to keep track of classes added to the Class Cart
@@ -231,6 +239,10 @@ const ClassSearch = () => {
               <button className="btn btn-secondary" onClick={handleResetFilters}>
                 Reset Filters
               </button>
+              {/* Button to show recommendations */}
+              <button className="btn btn-primary" onClick={handleShowRecommendations}>
+                Show Recommendations
+              </button>
             </div>
           </div>
         </div>
@@ -267,6 +279,9 @@ const ClassSearch = () => {
         />
       </div>
       {duplicateClassMessage && <p style={{ color: 'red' }}>{duplicateClassMessage}</p>}
+
+      {/* Display CourseRecommendations if showRecommendations is true */}
+      {showRecommendations && <CourseRecommendations currentUser={currentUser} />}
     </div>
   );
 };
