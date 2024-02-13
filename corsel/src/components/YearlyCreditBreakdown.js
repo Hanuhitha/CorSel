@@ -73,7 +73,7 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
 
   // Calculate total earned credits
   const totalEarnedCredits = Object.values(creditBreakdown).reduce((acc, { earned }) => acc + earned, 0);
-
+  // asdfh
   return (
     <div style={{
       padding: '20px',
