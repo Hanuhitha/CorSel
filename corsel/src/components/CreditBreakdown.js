@@ -9,7 +9,7 @@ const CreditBreakdown = ({ finalizedCourses }) => {
     { name: 'Science', requiredCredits: 7 },
     { name: 'Foreign Language', requiredCredits: 7 },
     { name: 'Art', requiredCredits: 7 },
-    { name: 'MISC', requiredCredits: 7 },
+    { name: 'Misc', requiredCredits: 7 },
   ];
 
   // Function to calculate credit breakdown

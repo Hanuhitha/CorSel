@@ -10,7 +10,7 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
       { name: 'Science', requiredCredits: 3 },
       { name: 'Foreign Language', requiredCredits: 3 },
       { name: 'Art', requiredCredits: 1 },
-      { name: 'MISC', requiredCredits: 1 },
+      { name: 'Misc', requiredCredits: 1 },
     ],
     2: [
       { name: 'Math', requiredCredits: 3 },
@@ -19,7 +19,7 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
       { name: 'Science', requiredCredits: 3 },
       { name: 'Foreign Language', requiredCredits: 3 },
       { name: 'Art', requiredCredits: 1 },
-      { name: 'MISC', requiredCredits: 1 },
+      { name: 'Misc', requiredCredits: 1 },
     ],
     3: [
       { name: 'Math', requiredCredits: 3 },
@@ -28,7 +28,7 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
       { name: 'Science', requiredCredits: 3 },
       { name: 'Foreign Language', requiredCredits: 3 },
       { name: 'Art', requiredCredits: 1 },
-      { name: 'MISC', requiredCredits: 1 },
+      { name: 'Misc', requiredCredits: 1 },
     ],
     4: [
       { name: 'Math', requiredCredits: 3 },
@@ -37,7 +37,7 @@ const YearlyCreditBreakdown = ({ year, finalizedCourses }) => {
       { name: 'Science', requiredCredits: 3 },
       { name: 'Foreign Language', requiredCredits: 3 },
       { name: 'Art', requiredCredits: 1 },
-      { name: 'MISC', requiredCredits: 1 },
+      { name: 'Misc', requiredCredits: 1 },
     ],
   };
 

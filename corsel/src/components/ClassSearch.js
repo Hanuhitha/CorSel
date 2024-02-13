@@ -24,7 +24,7 @@ const ClassSearch = () => {
 
   const [currentUser, setCurrentUser] = useState(null); // Define currentUser state
   const [showRecommendations, setShowRecommendations] = useState(false); // New state for displaying recommendations
-
+  const [showRegularCourses, setShowRegularCourses] = useState(true);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -41,15 +41,35 @@ const ClassSearch = () => {
   const [subjectFilter, setSubjectFilter] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
   const [loading, setLoading] = useState(true);
+  const [recommendedCourses, setRecommendedCourses] = useState([]);
+
   
   const handleResetFilters = () => {
     setSubjectFilter('');
     setDifficultyFilter('');
+    console.log(filteredData);
   };
 
-  const handleShowRecommendations = () => {
-    // Set showRecommendations to true when the button is clicked
-    setShowRecommendations(true);
+
+  const handleShowRecommendations = async () => {
+    try {
+      const apiUrl = `http://localhost:4000/api/recommended-courses/${currentUser.uid}`;
+      const response = await fetch(apiUrl);
+
+      if (response.ok) {
+        const recommendedData = await response.json();
+        console.log('Recommended Courses data:', recommendedData);
+        setRecommendedCourses(recommendedData);
+      } else {
+        console.error(`Error: ${response.statusText}`);
+      }
+
+      // Hide regular courses when showing recommendations
+      setShowRegularCourses(false);
+      setShowRecommendations(true);
+    } catch (error) {
+      console.error('Error fetching recommended courses:', error);
+    }
   };
 
   // State to keep track of classes added to the Class Cart
@@ -192,7 +212,6 @@ const ClassSearch = () => {
     <div>
       <NavBar />
       <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-        {/* Filters Card */}
         <div style={{ flex: '0 0 20%', marginBottom: '20px' }}>
           <div className="card" style={{ padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4' }}>
             <h5 className="card-title">Filters</h5>
@@ -239,7 +258,6 @@ const ClassSearch = () => {
               <button className="btn btn-secondary" onClick={handleResetFilters}>
                 Reset Filters
               </button>
-              {/* Button to show recommendations */}
               <button className="btn btn-primary" onClick={handleShowRecommendations}>
                 Show Recommendations
               </button>
@@ -247,31 +265,38 @@ const ClassSearch = () => {
           </div>
         </div>
 
-        {/* Courses Card (Wider) */}
         <div style={{ flex: '0 0 50%', maxWidth: '47%', marginBottom: '20px' }}>
-          <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
-            {/* Set a min-height value based on your design preferences */}
-            <h5 className="card-title">Courses</h5>
-            <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }}>
-              {loading ? (
-                <p>Loading...</p>
-              ) : filteredData.length === 0 ? (
-                <p>No matching data found</p>
-              ) : (
-                <div>
-                  {filteredData.map((item, index) => (
-                    <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '20px' }}>
-                      {/* Adjust the minWidth value based on your preference */}
-                      <CollapsibleClass classData={item} onAddClass={handleAddClass} />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+        <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
+          <h5 className="card-title">Courses</h5>
+          <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : showRecommendations ? (
+              <div>
+                {showRegularCourses && filteredData.map((item, index) => (
+                  <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '20px' }}>
+                    <CollapsibleClass classData={item} onAddClass={handleAddClass} />
+                  </div>
+                ))}
+                {recommendedCourses.map((item, index) => (
+                  <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '20px' }}>
+                    <CollapsibleClass classData={item} onAddClass={handleAddClass} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {filteredData.map((item, index) => (
+                  <div key={index} style={{ border: '0px', background: '#b3d7ed', borderRadius: '0px', marginBottom: '10px', minWidth: '20px' }}>
+                    <CollapsibleClass classData={item} onAddClass={handleAddClass} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        {/* Class Cart */}
         <ClassCart
           classesInCart={classesInCart}
           onRemoveClass={handleRemoveClass}
@@ -279,9 +304,6 @@ const ClassSearch = () => {
         />
       </div>
       {duplicateClassMessage && <p style={{ color: 'red' }}>{duplicateClassMessage}</p>}
-
-      {/* Display CourseRecommendations if showRecommendations is true */}
-      {showRecommendations && <CourseRecommendations currentUser={currentUser} />}
     </div>
   );
 };
