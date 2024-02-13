@@ -255,20 +255,20 @@ const ClassSearch = () => {
                 ))}
               </select>
 
-              <button className="btn btn-secondary" onClick={handleResetFilters}>
+              <button className="btn btn-secondary" onClick={handleResetFilters} style={{ marginRight: '10px'}}>
                 Reset Filters
               </button>
-              <button className="btn btn-primary" onClick={handleShowRecommendations}>
+              <button className="btn btn-primary" onClick={handleShowRecommendations} style={{ marginTop: '10px' }}>
                 Show Recommendations
               </button>
             </div>
           </div>
         </div>
 
-        <div style={{ flex: '0 0 50%', maxWidth: '47%', marginBottom: '20px' }}>
+        <div style={{ flex: '20 0 0%', width: '1000px', marginBottom: '20px', marginLeft: '10px', marginRight: '10px'}}>
         <div className="card" style={{ width: '100%', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f4f4f4', minHeight: '200px' }}>
           <h5 className="card-title">Courses</h5>
-          <div style={{ maxHeight: '500px', overflowY: 'auto', marginBottom: '0px' }}>
+          <div style={{ height: '500px', overflowY: 'auto', marginBottom: '0px' }}>
             {loading ? (
               <p>Loading...</p>
             ) : showRecommendations ? (
