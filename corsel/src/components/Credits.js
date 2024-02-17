@@ -9,44 +9,79 @@ import { db, auth } from './firebase';
 import { useClassContext } from './ClassContext';
 
 const Credits = () => {
+  const [, setSelectedYear] = useState(null);
+  const captureRef = useRef(null);
 
-  const [, setFinalizedCourses] = useState(
-    JSON.parse(localStorage.getItem('selectedClasses')) || []
-  );
+  const { classesInCart, setClassesInCart } = useClassContext();
 
-  const [currentUser, setCurrentUser] = useState(null); // Define currentUser state
+  const [currentUser, setCurrentUser] = useState(null);
+  const [finalizedCourses, setFinalizedCourses] = useState([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
 
-    // Cleanup the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
 
-  const [finalizedCourses] = useState(
-    JSON.parse(localStorage.getItem('selectedClasses')) || []
-  );
-  const [, setSelectedYear] = useState(null);
-  const captureRef = useRef(null);
+  useEffect(() => {
+    const fetchFinalizedCourses = async () => {
+      try {
+        if (currentUser && currentUser.uid) {
+          const userDoc = await db.collection('users').doc(currentUser.uid).get();
+          const userData = userDoc.data();
+    
+          // Assuming 'finalizedSchedule' contains an array of course IDs
+          const userFinalizedCoursesIDs = userData?.finalizedSchedule || [];
+    
+          // Fetch the detailed course information for each course ID
+          const userFinalizedCourses = await Promise.all(
+            userFinalizedCoursesIDs.map(async (courseID) => {
+              try {
+                const courseDoc = await db.collection('your_collection_name').doc(courseID).get();
+    
+                if (courseDoc.exists) {
+                  return courseDoc.data();
+                } else {
+                  console.warn(`Course with ID ${courseID} not found in the database.`);
+                  return null;
+                }
+              } catch (error) {
+                console.error(`Error fetching course with ID ${courseID}:`, error);
+                return null;
+              }
+            })
+          );
+    
+          // Filter out null courses
+          const filteredCourses = userFinalizedCourses.filter(Boolean);
+    
+          console.log('userFinalizedCourses:', filteredCourses);
+          setFinalizedCourses(filteredCourses);
+        }
+      } catch (error) {
+        console.error('Error fetching finalized courses:', error);
+      }
+    };
 
-  const { classesInCart, setClassesInCart } = useClassContext();
+    fetchFinalizedCourses();
+  }, [currentUser]);  
 
   const removeFromClassSchedule = async (userId, selectedClass) => {
     try {
       const userDocRef = db.collection('users').doc(userId);
-  
+
       await db.runTransaction(async (transaction) => {
         try {
           const doc = await transaction.get(userDocRef);
           const currentSchedule = doc.data().finalizedSchedule || [];
-  
+
           const removedCourseNumber = selectedClass?.courseInfo_courseNumber;
-  
+
           if (typeof removedCourseNumber === 'number' || !isNaN(removedCourseNumber)) {
             const updatedSchedule = currentSchedule.filter(courseNumber => courseNumber !== removedCourseNumber);
-  
+
             transaction.update(userDocRef, { finalizedSchedule: updatedSchedule });
           } else {
             console.error('Error: courseInfo_courseNumber is not a number.');
@@ -57,56 +92,54 @@ const Credits = () => {
           throw error; // Rethrow the error to stop the transaction
         }
       });
-  
+
       const updatedSchedule = await db.collection('users').doc(userId).get().then((doc) => doc.data().finalizedSchedule || []);
       console.log('Finalized Schedule after removal:', updatedSchedule);
-  
+
       return updatedSchedule;
     } catch (error) {
       console.error('Error removing class from schedule:', error);
       return [];
     }
-  };  
+  };
 
-  const handleRemove = async (classToRemove, removedCourse) => {
+  const handleRemove = async (classToRemove, courseInfo_courseName) => {
+    try {
+      if (courseInfo_courseName) {
+        const updatedCourses = finalizedCourses.filter(
+          (course) => course.courseInfo_courseName !== courseInfo_courseName
+        );
 
-    const updatedCourses = finalizedCourses.filter(
-      (course) => course.courseInfo_courseName !== removedCourse.courseInfo_courseName
-    );
+        setFinalizedCourses(updatedCourses);
 
-    setFinalizedCourses(updatedCourses);
-    localStorage.setItem('selectedClasses', JSON.stringify(updatedCourses));
-
-    try { 
-      // Check if currentUser is defined and has the uid property
-      if (currentUser && currentUser.uid) {
-        // Remove the class from the database
-        const updatedSchedule = await removeFromClassSchedule(currentUser.uid, classToRemove);
-
+        if (currentUser && currentUser.uid) {
+          const updatedSchedule = await removeFromClassSchedule(currentUser.uid, classToRemove);
+          console.log('Updated schedule from database:', updatedSchedule);
+        } else {
+          console.error('Error: currentUser or currentUser.uid is not defined');
+        }
       } else {
-        // Handle case where currentUser or currentUser.uid is not defined
-        console.error('Error: currentUser or currentUser.uid is not defined');
-        // Optionally, you might want to handle this case, e.g., redirect to login
+        console.error('Error: courseInfo_courseName is not valid or not provided');
       }
     } catch (error) {
       console.error('Error handling removal:', error);
-      // Handle any error that might occur during the removal process
     }
   };
 
   const organizeCoursesByYear = () => {
     const coursesByYear = {};
-
+  
     finalizedCourses.forEach((course) => {
-      const year = course.courseYear || 'Uncategorized';
-
+      // Check if the course object and courseYear property exist before accessing
+      const year = course && course.courseYear ? course.courseYear : 'Uncategorized';
+  
       if (coursesByYear[year]) {
         coursesByYear[year].push(course);
       } else {
         coursesByYear[year] = [course];
       }
     });
-
+  
     return coursesByYear;
   };
 
@@ -161,13 +194,13 @@ const Credits = () => {
               </h3>
               <FinalizedCourses
                 finalizedCourses={coursesByYear[yearNumber]}
-                onRemove={handleRemove}
+                onRemove={(classToRemove, removedCourse) => handleRemove(classToRemove, removedCourse.courseInfo_courseName)}
               />
               {coursesByYear[yearNumber] && coursesByYear[yearNumber].length > 0 && (
                 <div style={{ marginTop: 'auto', textAlign: 'center' }}>
-                <Link to={`/Credits/${yearNumber}`} state={{ year: yearNumber, courses: coursesByYear[yearNumber] }} style={{ textDecoration: 'none' }}>
-                  <button className="btn btn-primary">More Details</button>
-                </Link>
+                  <Link to={`/Credits/${yearNumber}`} state={{ year: yearNumber, courses: coursesByYear[yearNumber] }} style={{ textDecoration: 'none' }}>
+                    <button className="btn btn-primary">More Details</button>
+                  </Link>
                 </div>
               )}
             </div>
