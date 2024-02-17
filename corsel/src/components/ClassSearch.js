@@ -185,34 +185,27 @@ const ClassSearch = () => {
 
 
   const handleAddCourses = async () => {
-    try {
-      // Add logic to send selected classes to the backend or perform any other action
-      
-      // Move classes from Class Cart to selectedClasses
-      const updatedSelectedClasses = [...selectedClasses, ...classesInCart];
-      setSelectedClasses(updatedSelectedClasses);
-    
-      // Clear the Class Cart state
-      setClassesInCart([]);
-    
-      // Update finalized schedule for the current user
-      const userId = currentUser.uid;
-      for (const course of classesInCart) {
-        await updateFinalizedSchedule(userId, course);
-      }
+    // Add logic to send selected classes to the backend or perform any other action
   
-      // Update Firestore document for the current user with the updated selected classes
-      await db.collection('users').doc(userId).update({
-        selectedClasses: updatedSelectedClasses,
-      });
+    // Move classes from Class Cart to selectedClasses
+    const updatedSelectedClasses = [...selectedClasses, ...classesInCart];
+    setSelectedClasses(updatedSelectedClasses);
   
-      // Redirect to the Credits page after adding courses
-      history('/Credits');
-    } catch (error) {
-      console.error('Error adding courses:', error);
+    // Clear the Class Cart state
+    setClassesInCart([]);
+  
+    // Update localStorage
+    localStorage.setItem('selectedClasses', JSON.stringify(updatedSelectedClasses));
+  
+    // Update finalized schedule for the current user
+    const userId = currentUser.uid;
+    for (const course of classesInCart) {
+      await updateFinalizedSchedule(userId, course);
     }
-  };
   
+    // Redirect to the Credits page after adding courses
+    history('/Credits');
+  };
 
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
-//import { useAuth } from '../contexts/AuthContext';
-import { auth } from './firebase';
+import { useAuth } from '../contexts/AuthContext';
+import { db, auth } from './firebase';
 
 const CourseRecommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -19,7 +19,7 @@ const CourseRecommendations = () => {
   }, []);
 
   useEffect(() => {
-    const fetchDataFromBackend = async () => {
+    const fetchDataFromBackend = async () => {  
       try {
         if (currentUser) {
           const apiUrl = `http://localhost:4000/api/recommended-courses/${currentUser.uid}`;

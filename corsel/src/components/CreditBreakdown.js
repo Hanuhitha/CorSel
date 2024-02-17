@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { db } from './firebase';
+import React from 'react';
 
 const CreditBreakdown = ({ finalizedCourses }) => {
-  const [courseDetails, setCourseDetails] = useState([]);
-
   // Define categories and their required credits
   const allowedCategories = [
     { name: 'Math', requiredCredits: 7 },
@@ -14,25 +11,6 @@ const CreditBreakdown = ({ finalizedCourses }) => {
     { name: 'Art', requiredCredits: 7 },
     { name: 'Misc', requiredCredits: 7 },
   ];
-
-  // Fetch course details from the database based on course IDs
-  useEffect(() => {
-    const fetchCourseDetails = async () => {
-      try {
-        const coursePromises = finalizedCourses.map(async (courseId) => {
-          const doc = await db.collection('courses').doc(courseId).get();
-          return doc.data();
-        });
-
-        const fetchedCourseDetails = await Promise.all(coursePromises);
-        setCourseDetails(fetchedCourseDetails);
-      } catch (error) {
-        console.error('Error fetching course details:', error);
-      }
-    };
-
-    fetchCourseDetails();
-  }, [finalizedCourses]);
 
   // Function to calculate credit breakdown
   const calculateCreditBreakdown = () => {
@@ -46,16 +24,17 @@ const CreditBreakdown = ({ finalizedCourses }) => {
       };
     });
 
-    // Calculate earned credits based on fetched course details
-    courseDetails.forEach(course => {
-      const category = course?.courseCat || 'Uncategorized';
-      const credits = course?.Credits || 0;
+    if (Array.isArray(finalizedCourses)) {
+      finalizedCourses.forEach(course => {
+        const category = course.courseCat || 'Uncategorized';
+        const credits = course.Credits || 0;
 
-      // Only accumulate credits for allowed categories
-      if (creditBreakdown.hasOwnProperty(category)) {
-        creditBreakdown[category].earned += credits;
-      }
-    });
+        // Only accumulate credits for allowed categories
+        if (creditBreakdown.hasOwnProperty(category)) {
+          creditBreakdown[category].earned += credits;
+        }
+      });
+    }
 
     return creditBreakdown;
   };
@@ -76,8 +55,8 @@ const CreditBreakdown = ({ finalizedCourses }) => {
             border: '1px solid #ccc',
             padding: '10px',
             marginBottom: '10px',
-            backgroundColor: earned >= required ? '#a3e8b3' : '#b3d7ed',
-            borderRadius: '10px',
+            backgroundColor: earned >= required ? '#a3e8b3' : '#b3d7ed', // Light green when earned credits meet or exceed required
+            borderRadius: '10px', // Optional: Add border radius for rounded corners
           }}
         >
           <p>
@@ -90,8 +69,8 @@ const CreditBreakdown = ({ finalizedCourses }) => {
           border: '1px solid #ccc',
           padding: '10px',
           marginBottom: '10px',
-          backgroundColor: totalEarnedCredits >= 49 ? '#a3e8b3' : '#b3d7ed',
-          borderRadius: '10px',
+          backgroundColor: totalEarnedCredits >= 49 ? '#a3e8b3' : '#b3d7ed', // Light green when total earned credits meet or exceed 40
+          borderRadius: '10px', // Optional: Add border radius for rounded corners
         }}
       >
         <p>
