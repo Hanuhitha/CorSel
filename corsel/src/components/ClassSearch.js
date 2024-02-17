@@ -208,6 +208,68 @@ const ClassSearch = () => {
   };
 
 
+  const addToCart = async (userId, extracurricularName) => {
+    try {
+        const userDocRef = db.collection('users').doc(userId);
+
+        await db.runTransaction(async (transaction) => {
+            try {
+                const doc = await transaction.get(userDocRef);
+                let userData = doc.data();
+
+                // Create the finalizedExtracurriculars field if it doesn't exist
+                if (!userData.finalizedExtracurriculars) {
+                    userData = { ...userData, finalizedExtracurriculars: [] };
+                }
+
+                // Check if the extracurricular is already in the finalized extracurriculars
+                const extracurricularExists = userData.finalizedExtracurriculars.includes(extracurricularName);
+
+                if (!extracurricularExists) {
+                    // Update the finalizedExtracurriculars array
+                    userData.finalizedExtracurriculars.push(extracurricularName);
+                    transaction.update(userDocRef, userData);
+                } else {
+                    console.error('Extracurricular already exists in the finalized extracurriculars.');
+                    // Optionally handle this case further based on your needs
+                }
+            } catch (error) {
+                console.error('Error within transaction:', error);
+                throw error; // Rethrow the error to stop the transaction
+            }
+        });
+    } catch (error) {
+        console.error('Error adding extracurricular to finalized extracurriculars:', error);
+        // Optionally handle this error based on your needs
+    }
+};
+
+
+const handleAutofillClasses = async () => {
+  try {
+      const apiUrl = `http://localhost:4000/api/autofill-courses/${currentUser?.uid}`;
+      const response = await fetch(apiUrl);
+      console.log('hereeeeeee');
+
+      if (response.ok) {
+          const idArray = await response.json(); // Assuming the backend returns an array of IDs
+          console.log('IDs:', idArray); // Log the array of IDs
+
+          // Iterate over idArray and add each ID to the finalizedCourses array
+          idArray.forEach(async (extracurricularName) => {
+              await addToCart(currentUser?.uid, extracurricularName);
+          });
+
+      } else {
+          console.error(`Error: ${response.statusText}`);
+      }
+  } catch (error) {
+      console.error('Error fetching autofill courses:', error);
+  }
+};
+
+
+
   return (
     <div>
       <NavBar />
@@ -260,6 +322,9 @@ const ClassSearch = () => {
               </button>
               <button className="btn btn-primary" onClick={handleShowRecommendations} style={{ marginTop: '10px' }}>
                 Show Recommendations
+              </button>
+              <button className="btn btn-primary" onClick={handleAutofillClasses} style={{ marginTop: '10px' }}>
+                Autofill Classes
               </button>
             </div>
           </div>

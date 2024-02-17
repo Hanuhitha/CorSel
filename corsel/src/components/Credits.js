@@ -171,6 +171,27 @@ const Credits = () => {
     }
   };
 
+  /*const handleAutofill = async () => {
+    try {
+        const apiUrl = `http://localhost:4000/api/autofill-courses/${currentUser?.uid}`;
+        const response = await fetch(apiUrl);
+
+        if (response.ok) {
+            const idArray = await response.json(); // Assuming the backend returns an array of IDs
+            console.log('IDs:', idArray); // Log the array of IDs
+
+            
+
+
+        } else {
+            console.error(`Error: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Error fetching autofill courses:', error);
+    }
+};*/
+
+
   const getYearClassName = (yearNumber) => {
     const yearNames = ['Freshman Year', 'Sophomore Year', 'Junior Year', 'Senior Year'];
     return yearNames[yearNumber - 1] || `Year ${yearNumber}`;
