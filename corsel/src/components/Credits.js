@@ -87,58 +87,57 @@ const Credits = () => {
   };
   
   
-  const removeFromClassSchedule = async (userId, selectedClass) => {
+  const removeFromClassScheduleAndState = async (userId, courseInfo_courseNumber) => {
     try {
-      const userDocRef = db.collection('users').doc(userId);
-
+      const userRef = db.collection('users').doc(userId);
+  
       await db.runTransaction(async (transaction) => {
-        try {
-          const doc = await transaction.get(userDocRef);
-          const currentSchedule = doc.data().finalizedSchedule || [];
-
-          const removedCourseNumber = selectedClass?.courseInfo_courseNumber;
-
-          if (typeof removedCourseNumber === 'number' || !isNaN(removedCourseNumber)) {
-            const updatedSchedule = currentSchedule.filter((courseNumber) => courseNumber !== removedCourseNumber);
-
-            transaction.update(userDocRef, { finalizedSchedule: updatedSchedule });
-          } else {
-            console.error('Error: courseInfo_courseNumber is not a number.');
-          }
-        } catch (error) {
-          console.error('Error within transaction:', error);
-          throw error;
+        const userData = await transaction.get(userRef);
+  
+        if (userData.exists) {
+          transaction.update(userRef, {
+            finalizedSchedule: firebase.firestore.FieldValue.arrayRemove(courseInfo_courseNumber),
+          });
+  
+          console.log('Transaction update successful.');
+        } else {
+          console.error('User data not found for the given userId:', userId);
+          throw new Error('User data not found');
         }
       });
-
-      const updatedSchedule = await db.collection('users').doc(userId).get().then((doc) => doc.data().finalizedSchedule || []);
-      console.log('Finalized Schedule after removal:', updatedSchedule);
-
-      return updatedSchedule;
+  
+      // Update the state after successfully updating Firestore
+      const updatedFinalizedCourses = finalizedCourses.filter(
+        (course) => course.courseInfo_courseNumber !== courseInfo_courseNumber
+      );
+      setFinalizedCourses(updatedFinalizedCourses);
     } catch (error) {
-      console.error('Error removing class from schedule:', error);
-      return [];
+      console.error('Error removing course from the database:', error);
+      throw error;
     }
   };
-
-  const handleRemove = async (classToRemove, removedCourse) => {
-    const updatedCourses = finalizedCourses.filter(
-      (course) => course.courseInfo_courseName !== removedCourse.courseInfo_courseName
-    );
-
-    setFinalizedCourses(updatedCourses);
-
+  
+  
+  // handleRemove now calls removeFromClassScheduleAndState
+  const handleRemove = async (classToRemove) => {
+    const removedCourseNumber = classToRemove.courseInfo_courseNumber;
+  
     try {
+      // Check if currentUser is defined and has the uid property
       if (currentUser && currentUser.uid) {
-        const updatedSchedule = await removeFromClassSchedule(currentUser.uid, classToRemove);
+        // Remove the class from the database using courseInfo_courseNumber
+        await removeFromClassScheduleAndState(currentUser.uid, removedCourseNumber);
       } else {
+        // Handle case where currentUser or currentUser.uid is not defined
         console.error('Error: currentUser or currentUser.uid is not defined');
+        // Optionally, you might want to handle this case, e.g., redirect to login
       }
     } catch (error) {
       console.error('Error handling removal:', error);
+      // Handle any error that might occur during the removal process
     }
   };
-
+  
   const organizeCoursesByYear = () => {
     const coursesByYear = {};
 
