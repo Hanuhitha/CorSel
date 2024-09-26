@@ -13,3 +13,4 @@ admissions, attendance, and consultation with the Admission Department.
 Public Schools.
 
 
+TECH STACK USED :  PYTHON(FLASK) for backend,  REACT.JS for frontend
