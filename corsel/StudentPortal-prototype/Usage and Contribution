@@ -1,0 +1,12 @@
+Admin Operations:
+
+Add new student data by clicking on the "Add Student Data" button.
+Update existing student data by clicking the "Update" button next to the student entry.
+Delete a student record by clicking the "Delete" button next to the student entry.
+
+Student View:
+
+Students can log in to view their own data but cannot edit or delete any records.
+
+Contributing:
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

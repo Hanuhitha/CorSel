@@ -1,0 +1,81 @@
+{% include "header.html" %}
+
+{% block body %}
+
+<div class="panel-heading">
+    <h2>Add Student <a class="pull-right btn btn-success" href="/">Back</a></h2>
+</div>
+
+<div class="panel-body">
+    <form action="{{ url_for('process_student') }}" method="post">
+        <div class="form-group">
+            <label for="regno">Registration Number</label>
+            <input type="text" class="form-control" name="regno" id="regno" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Student Name</label>
+            <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" name="age" id="age" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Student Email</label>
+            <input type="email" class="form-control" name="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fname">Father's Name</label>
+            <input type="text" class="form-control" name="fname" id="fname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="mname">Mother's Name</label>
+            <input type="text" class="form-control" name="mname" id="mname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" class="form-control" name="phone" id="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sal">Salary</label>
+            <input type="number" class="form-control" name="sal" id="sal" required>
+        </div>
+
+        <div class="form-group">
+            <label for="uname">Username</label>
+            <input type="text" class="form-control" name="uname" id="uname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pswd">Password</label>
+            <input type="password" class="form-control" name="pswd" id="pswd" required>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" name="submit" value="Add Student">
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+{% include "footer.html" %}
